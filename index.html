@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<title>Votação SAB CIO</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Poppins:wght@400;600&display=swap">
+<style>
+  :root{
+    --bg:#212226; --card:#292A2F; --card2:#2F3036; --line:#3C3D45;
+    --roxo:#A05BD1; --lima:#C3D93B; --teal:#22C1C3;
+    --texto:#E4E4EA; --muted:#A3A3AE;
+    color-scheme: dark;
+  }
+  body{
+    margin:0; background:var(--bg); color:var(--texto);
+    font-family:Poppins,system-ui,Segoe UI,Roboto,sans-serif;
+    padding-inline:16px; padding-block:12px; min-height:96vh;
+  }
+  h1,h2,h3,.q{font-family:Montserrat,Poppins,sans-serif; font-weight:800; text-wrap:balance; margin:0}
+  .eyebrow{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--roxo); font-weight:600}
+  .eyebrow::before{content:""; display:block; width:34px; height:3px; background:var(--roxo); margin-bottom:6px}
+  .muted{color:var(--muted)}
+  .wrap{max-width:520px; margin:0 auto; display:flex; flex-direction:column; gap:16px}
+  .telaoWrap{max-width:1220px; margin:0 auto; display:flex; flex-direction:column; gap:14px; min-height:92vh}
+  .palco{flex:1; display:flex; flex-direction:column; gap:14px; justify-content:flex-start}
+  .logo{font-family:Montserrat; font-weight:800; font-size:15px}
+  .logo b{color:var(--roxo)}
+  .card{background:var(--card); border-radius:12px; padding:16px}
+  .q{font-size:clamp(19px,2.6vw,30px); line-height:1.25}
+  .titulo1{font-size:clamp(26px,4vw,52px); line-height:1.1}
+  .titulo2{font-size:clamp(20px,3vw,38px); color:var(--roxo)}
+  .opts{display:flex; flex-direction:column; gap:10px; margin-top:4px}
+  button{font:inherit; color:inherit; cursor:pointer}
+  .opt{
+    display:flex; align-items:center; gap:12px; text-align:left; width:100%; box-sizing:border-box;
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:13px; font-size:15px; transition:border-color .15s, background .15s;
+  }
+  .opt:active,.opt:hover{border-color:var(--roxo)}
+  .opt.sel{border-color:var(--roxo); background:var(--card2)}
+  .opt .letra{
+    flex:0 0 34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:var(--card2); border:1px solid var(--roxo); color:var(--roxo);
+    font-family:Montserrat; font-weight:800;
+  }
+  .btn{background:var(--roxo); color:#17131c; border:0; border-radius:10px; padding:11px 16px; font-weight:600; font-size:13.5px}
+  .btn[disabled]{opacity:.4; cursor:default}
+  .btn.ghost{background:transparent; color:var(--texto); border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--roxo)}
+  .pill{display:inline-block; border:1px solid var(--line); border-radius:999px; padding:4px 12px; font-size:12px; color:var(--muted)}
+  .pill.on{border-color:var(--lima); color:var(--lima)}
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .bar{display:grid; grid-template-columns:34px 1fr 84px; gap:10px; align-items:center; margin-top:10px}
+  .bar .letra{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:var(--card2);border:1px solid var(--line);color:var(--muted);font-family:Montserrat;font-weight:800;font-size:13px}
+  .bar.top .letra{border-color:var(--lima);color:var(--lima)}
+  .trilho{background:var(--card2); border-radius:8px; height:34px; position:relative; overflow:hidden}
+  .fill{position:absolute; inset:0 auto 0 0; width:0%; background:var(--roxo); border-radius:8px; transition:width .5s ease}
+  .bar.top .fill{background:var(--lima)}
+  .trilho .rotulo{position:absolute; inset:0; display:flex; align-items:center; padding-inline:10px; font-size:12.5px; z-index:1;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--texto)}
+  .num{font-variant-numeric:tabular-nums; text-align:right; font-weight:600; font-size:14px}
+  .num small{display:block; font-weight:400; color:var(--muted); font-size:11px}
+  .grade{display:grid; grid-template-columns:minmax(0,1fr) 290px; gap:16px; align-items:start}
+  @media (max-width:840px){ .grade{grid-template-columns:1fr} }
+  .qrbox{background:var(--card); border-radius:12px; padding:14px; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center}
+  .qrbox #qr{background:#fff; padding:9px; border-radius:8px; line-height:0}
+  .qrbox .url{font-size:11.5px; color:var(--teal); word-break:break-all; user-select:all}
+  .controles{display:flex; flex-wrap:wrap; gap:8px; align-items:center; background:var(--card); border-radius:12px; padding:10px 12px}
+  .controles .passo{font-variant-numeric:tabular-nums; font-size:12.5px; color:var(--muted); margin-inline:4px}
+  .aviso{border:1px solid var(--teal); border-radius:10px; padding:10px 14px; font-size:13px; background:var(--card)}
+  .aviso b{color:var(--teal)}
+  .grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:12px}
+  .grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:12px}
+  .kpi{background:var(--card); border-radius:12px; padding:14px 16px; border-left:4px solid var(--roxo)}
+  .kpi .valor{font-family:Montserrat; font-weight:800; font-size:clamp(20px,2.4vw,30px); color:var(--lima)}
+  .kpi b{display:block; font-size:13.5px; margin-top:4px}
+  .kpi span{font-size:12px; color:var(--muted)}
+  .coluna{background:var(--card); border-radius:12px; padding:16px}
+  .coluna h3{color:var(--roxo); font-size:16px}
+  .coluna .sub{font-size:12px; color:var(--muted); margin:2px 0 10px}
+  .coluna ul{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:7px; font-size:13.5px}
+  .grupoT{font-size:12px; font-weight:600; letter-spacing:.06em; color:var(--roxo); text-transform:uppercase; margin-bottom:8px}
+  .grupoT::before{content:""; display:inline-block; width:22px; height:3px; background:var(--roxo); margin-right:8px; vertical-align:middle}
+  .passos{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px}
+  .passo-c{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px}
+  .passo-c b{display:block; font-size:13.5px; margin-bottom:4px}
+  .passo-c span{font-size:12px; color:var(--muted)}
+  .statement{border:1px solid var(--line); border-radius:12px; padding:12px 16px; font-size:14.5px; background:var(--card)}
+  .statement b{color:var(--lima)}
+  .fotoGrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px}
+  .mini h3{font-size:13.5px; margin-bottom:6px}
+  .mini .linha{display:grid; grid-template-columns:22px 1fr 40px; gap:8px; align-items:center; margin-top:6px; font-size:12px}
+  .mini .trilho{height:18px}
+  .indice{display:flex; align-items:center; gap:16px; flex-wrap:wrap}
+  .indice .valor{font-family:Montserrat; font-weight:800; font-size:44px; color:var(--lima); font-variant-numeric:tabular-nums}
+  .bench{border-left:3px solid var(--teal); padding-left:12px; font-size:13px; color:var(--muted); margin-top:12px}
+  .bench b{color:var(--teal)}
+  .rodape{font-size:11.5px; color:var(--muted); font-style:italic}
+  .contador{font-variant-numeric:tabular-nums; color:var(--lima); font-weight:600}
+  .headline{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap}
+  input.pin{background:var(--card2); color:var(--texto); border:1px solid var(--line); border-radius:8px; padding:12px; font:inherit; width:100%; box-sizing:border-box}
+  .check{color:var(--lima); font-family:Montserrat; font-weight:800; font-size:40px}
+  ol.nove{margin:0; padding-left:22px; display:flex; flex-direction:column; gap:9px; font-size:14px}
+  .animGrid{display:grid; grid-template-columns:minmax(0,1fr) 330px; gap:14px}
+  @media (max-width:840px){ .animGrid{grid-template-columns:1fr} }
+  .cv{width:100%; height:min(54vh,500px); display:block; background:var(--card); border-radius:12px}
+  .logp{background:var(--card); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:8px;
+    max-height:min(54vh,500px); overflow:auto}
+  .logl{font-size:12.5px; border-left:3px solid var(--roxo); padding-left:10px}
+  .logl.lima{border-color:var(--lima)}
+  .logl.fim{border-color:var(--teal); color:var(--teal); font-weight:600}
+  @media (prefers-reduced-motion:reduce){ .fill{transition:none} }
+</style>
+
+<div id="app"><div class="wrap"><div class="card"><p class="muted">Carregando a sessão…</p></div></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+"use strict";
+/* ═══════════ CONFIG — preencher para o evento (vazio = MODO DEMO) ═══════════ */
+const CONFIG = {
+  SUPABASE_URL: "",        // ex.: https://abcdxyz.supabase.co
+  SUPABASE_ANON_KEY: "",   // chave "anon public" do projeto
+  SESSAO: "sabcio2026",
+  PIN_TELAO: "apllos2026"
+};
+
+/* ═══════════ PERGUNTAS DE VOTAÇÃO ═══════════ */
+const PERGUNTAS = {
+  aq: { rotulo:"Aquecimento", pergunta:"De qual setor você vem?",
+    opcoes:[["A","Indústria"],["B","Varejo e consumo"],["C","Serviços financeiros"],["D","Saúde"],["E","Outro"]],
+    scores:null, bench:"Aquecimento — serve para testar o QR com a sala.", gancho:"Todo mundo conseguiu votar? Então vamos ao que interessa." },
+  p1: { rotulo:"Provocação 1 · Inventário", pergunta:"Quantos agentes de IA rodam hoje na sua empresa com acesso a dados reais?",
+    opcoes:[["A","Sei o número exato — temos inventário formal"],["B","Tenho uma boa ideia — mas sem inventário"],["C","Honestamente, não sei"],["D","Ainda não temos agentes em produção"]],
+    scores:{A:4,B:2,C:1,D:null}, bench:"Mercado: 82% das organizações têm agentes que a TI desconhece (Cloud Security Alliance, 04/2026).",
+    gancho:"Quem votou C: o que impede o inventário?" },
+  p2: { rotulo:"Provocação 2 · Política", pergunta:"A política de IA da sua empresa hoje é o quê, na prática?",
+    opcoes:[["A","Um documento — PDF, intranet, código de conduta"],["B","Um comitê que revisa caso a caso"],["C","Regras executadas por sistema — bloqueiam de fato"],["D","Ainda não temos política formal"]],
+    scores:{A:2,B:3,C:4,D:1}, bench:"Mercado: só 21% têm governança madura para agentes (Deloitte, 08/2026).",
+    gancho:"Quem votou A: quando foi que o PDF bloqueou algo?" },
+  p3: { rotulo:"Provocação 3 · Violação", pergunta:"Se um agente violar uma regra de arquitetura AGORA, o que acontece?",
+    opcoes:[["A","Nada — provavelmente ninguém perceberia"],["B","Alguém percebe depois, em revisão ou incidente"],["C","Gera alerta para um time responder"],["D","É bloqueado na hora — e fica registrado"]],
+    scores:{A:1,B:2,C:3,D:4}, bench:"Aviso é opinião; bloqueio é política.",
+    gancho:"Quem votou D: como isso foi construído aí?" },
+  p4: { rotulo:"Provocação 4 · Custo", pergunta:"Quem responde pela conta de inferência de IA na sua empresa?",
+    opcoes:[["A","Ninguém — o custo aparece diluído na fatura da nuvem"],["B","Medimos no agregado, sem dono por caso de uso"],["C","Custo por caso de uso, com dono nomeado"],["D","Custo por caso de uso com teto e corte automático"]],
+    scores:{A:1,B:2,C:3,D:4}, bench:"Custo é a 2ª causa dos 40% que vão desligar agentes até 2027 (Gartner, 05/2026).",
+    gancho:"Quem votou A: quanto foi a fatura de IA no mês passado?" },
+  p5: { rotulo:"Provocação 5 · Dados", pergunta:"Seus agentes de IA consomem dados de onde, na prática?",
+    opcoes:[["A","De uma plataforma governada — catálogo, qualidade, lineage"],["B","Direto de APIs e sistemas, caso a caso"],["C","De extrações e planilhas intermediárias"],["D","Não sabemos exatamente de onde"]],
+    scores:{A:4,B:2,C:1,D:1}, bench:"Agente bom em cima de dado ruim só erra mais rápido — a maturidade de IA começa na estrutura de dados.",
+    gancho:"Quem votou B ou C: quem responde quando o dado estiver errado?" },
+  p6: { rotulo:"Provocação 6 · Lineage", pergunta:"Um agente responde errado por causa de dado ruim. Vocês descobrem a origem como?",
+    opcoes:[["A","Lineage: rastreamos até a fonte em minutos"],["B","Investigação manual — leva dias"],["C","Só se alguém do negócio reclamar"],["D","Provavelmente nunca descobriríamos"]],
+    scores:{A:4,B:2,C:1,D:1}, bench:"Sem rastreabilidade do dado, a resposta do agente é uma opinião com boa aparência.",
+    gancho:"Quem votou A: que ferramenta sustenta esse lineage?" },
+  p7: { rotulo:"Provocação 7 · A trava", pergunta:"O que mais trava seus agentes de chegar à produção?",
+    opcoes:[["A","Segurança e compliance barram"],["B","Custo imprevisível — ninguém aprova"],["C","Qualidade: as respostas não são confiáveis"],["D","Falta esteira e método — cada piloto é artesanal"],["E","Adoção: as áreas de negócio não usam"],["F","Dados: a base não está pronta"]],
+    scores:null, bench:"A trava campeã ganha os próximos minutos de conversa.",
+    gancho:"Quem quer defender a trava que escolheu?" },
+  p8: { rotulo:"Provocação 8 · Auditoria", pergunta:"O auditor pede evidência sobre um código gerado por IA. Vocês montam em…",
+    opcoes:[["A","Horas — está tudo registrado"],["B","Dias — dá trabalho, mas sai"],["C","Semanas — vira caça a prints e e-mails"],["D","Não conseguiríamos montar"]],
+    scores:{A:4,B:3,C:2,D:1}, bench:"LGPD já exige prova hoje: agente também é tratamento de dados (sanção até 2% do faturamento).",
+    gancho:"Quem votou C ou D: o que falta para virar horas?" }
+};
+const NIVEIS = ["", "1 · Inicial", "2 · Repetível", "3 · Definido", "4 · Gerenciado"];
+
+/* ═══════════ ROTEIRO SEQUENCIAL (a apresentação inteira) ═══════════ */
+const SLIDES = [
+  { tipo:"anim" },
+  { tipo:"apresentador" },
+  { tipo:"recados" },
+  { tipo:"mecanica" },
+  { tipo:"voto", q:"aq" },
+  { tipo:"voto", q:"p1" },
+  { tipo:"voto", q:"p2" },
+  { tipo:"voto", q:"p3" },
+  { tipo:"voto", q:"p4" },
+  { tipo:"voto", q:"p5" },
+  { tipo:"voto", q:"p6" },
+  { tipo:"voto", q:"p7" },
+  { tipo:"voto", q:"p8" },
+  { tipo:"foto" },
+  { tipo:"sintese" },
+  { tipo:"quem" },
+  { tipo:"nove" },
+  { tipo:"cta" }
+];
+const NOVE = [
+  "Quantos agentes rodam hoje com acesso a dados de produção — e quem responde por cada um?",
+  "Nossa política de IA é executada por algum sistema — ou é um PDF?",
+  "Se um agente violar uma regra de arquitetura agora, o que acontece: aviso, bloqueio ou nada?",
+  "Uma aprovação de código sobrevive ao código mudar depois dela?",
+  "Sabemos o custo de inferência POR caso de uso — com teto e corte?",
+  "Que evidência entregamos ao auditor sobre código gerado por IA — em quanto tempo?",
+  "Nosso contexto (código, prompts, logs) está em nuvem própria ou na do fornecedor?",
+  "Qualidade de resposta é medida por eval automatizado ou por opinião?",
+  "Se trocarmos de fornecedor de IA amanhã, o histórico e as regras vêm conosco?"
+];
+const DEMO = !CONFIG.SUPABASE_URL;
+
+/* ═══════════ armazenamento: Supabase ou demo local ═══════════ */
+let sb = null;
+if (!DEMO) sb = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+const lsGet = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} };
+
+const store = DEMO ? {
+  async getSessao(){ return lsGet("vs_sessao", { idx:0, estado:"aguardando" }); },
+  async setSessao(p){ const s = Object.assign(await this.getSessao(), p); lsSet("vs_sessao", s); return s; },
+  async addVoto(pergunta, opcao, votante){
+    const vs = lsGet("vs_votos", []);
+    const i = vs.findIndex(v => v.pergunta===pergunta && v.votante===votante);
+    if (i >= 0) vs[i].opcao = opcao; else vs.push({ pergunta, opcao, votante });
+    lsSet("vs_votos", vs);
+  },
+  async getVotos(){ return lsGet("vs_votos", []); },
+  async limpar(){ lsSet("vs_votos", []); }
+} : {
+  async getSessao(){
+    const { data } = await sb.from("sessao").select("idx,estado").eq("id", CONFIG.SESSAO).single();
+    return data || { idx:0, estado:"aguardando" };
+  },
+  async setSessao(p){
+    await sb.from("sessao").update(Object.assign({}, p, { atualizado_em:new Date().toISOString() })).eq("id", CONFIG.SESSAO);
+  },
+  async addVoto(pergunta, opcao, votante){
+    await sb.from("votos").upsert(
+      { sessao_id:CONFIG.SESSAO, pergunta, opcao, votante },
+      { onConflict:"sessao_id,pergunta,votante" });
+  },
+  async getVotos(){
+    const { data } = await sb.from("votos").select("pergunta,opcao").eq("sessao_id", CONFIG.SESSAO);
+    return data || [];
+  },
+  async limpar(){ await sb.from("votos").delete().eq("sessao_id", CONFIG.SESSAO); }
+};
+
+/* ═══════════ identidade anônima ═══════════ */
+let VOTANTE = lsGet("vs_id", null);
+if (!VOTANTE) { VOTANTE = "v" + Math.random().toString(36).slice(2) + Date.now().toString(36); lsSet("vs_id", VOTANTE); }
+
+/* ═══════════ estado e utilidades ═══════════ */
+const $ = s => document.querySelector(s);
+const app = $("#app");
+const TELAO = /telao/.test(location.hash);
+let SES = { idx:0, estado:"aguardando" };
+let VOTOS = [];
+let ultimaAssinatura = "";
+let meusVotos = lsGet("vs_meus", {});
+const esc = t => String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const slideAtual = () => SLIDES[Math.min(Math.max(SES.idx|0,0), SLIDES.length-1)];
+function contagem(qid){
+  const c = {}; let total = 0;
+  for (const v of VOTOS) if (v.pergunta === qid) { c[v.opcao] = (c[v.opcao]||0)+1; total++; }
+  return { c, total };
+}
+function mediaScore(qid){
+  const q = PERGUNTAS[qid];
+  if (!q || !q.scores) return null;
+  const { c } = contagem(qid); let soma = 0, n = 0;
+  for (const [op, qtd] of Object.entries(c)) { const s = q.scores[op]; if (s != null) { soma += s*qtd; n += qtd; } }
+  return n ? soma/n : null;
+}
+function barras(qid, mini){
+  const q = PERGUNTAS[qid];
+  const { c, total } = contagem(qid);
+  const max = Math.max(1, ...q.opcoes.map(([l]) => c[l]||0));
+  return q.opcoes.map(([l, txt]) => {
+    const n = c[l]||0, pct = total ? Math.round(100*n/total) : 0;
+    const top = total > 0 && n === max;
+    if (mini) return '<div class="linha"><span class="muted">'+l+'</span><div class="trilho"><div class="fill" style="width:'+pct+'%'+(top?';background:var(--lima)':'')+'"></div></div><span class="num">'+pct+'%</span></div>';
+    return '<div class="bar'+(top?' top':'')+'"><span class="letra">'+l+'</span>'+
+      '<div class="trilho"><div class="fill" style="width:'+pct+'%"></div><span class="rotulo">'+esc(txt)+'</span></div>'+
+      '<span class="num">'+pct+'%<small>'+n+' voto'+(n===1?'':'s')+'</small></span></div>';
+  }).join("");
+}
+function fotografia(compacta){
+  const med = ids => { const ms = ids.map(mediaScore).filter(m => m != null);
+    return ms.length ? ms.reduce((a,b)=>a+b,0)/ms.length : null; };
+  const iAg = med(["p1","p2","p3","p4","p8"]);   // agentes & governança
+  const iDa = med(["p5","p6"]);                   // estrutura de dados
+  const geral = med(["p1","p2","p3","p4","p5","p6","p8"]);
+  let html = "";
+  if (geral != null)
+    html += '<div class="card indice"><span class="valor">'+geral.toFixed(1)+'</span>'+
+      '<div><b>Índice de maturidade da sala</b> (escala 1–4)<br>'+
+      '<span class="muted" style="font-size:12.5px">Nível típico: '+NIVEIS[Math.round(geral)]+' · leitura ilustrativa dos votos desta sessão</span>'+
+      '<div class="chips" style="margin-top:8px">'+
+      (iAg != null ? '<span class="pill on">Agentes & governança: '+iAg.toFixed(1)+'</span>' : '')+
+      (iDa != null ? '<span class="pill" style="border-color:var(--teal);color:var(--teal)">Estrutura de dados: '+iDa.toFixed(1)+'</span>' : '')+
+      '</div></div></div>';
+  if (!compacta)
+    html += '<div class="fotoGrid">'+ ["p1","p2","p3","p4","p5","p6","p7","p8"].map(id => {
+      const m = mediaScore(id);
+      return '<div class="card mini"><h3>'+esc(PERGUNTAS[id].rotulo)+(m!=null?' — média '+m.toFixed(1):'')+'</h3>'+barras(id,true)+'</div>';
+    }).join("") + '</div>';
+  return html || '<div class="card"><p class="muted">Ainda sem votos suficientes.</p></div>';
+}
+
+/* ═══════════ animação multi-agente (abertura) ═══════════ */
+const ANIM = { raf:0 };
+const CENA = {
+  nos: [
+    { id:"orq", nome:"Orquestrador", x:.50, y:.38 },
+    { id:"dem", nome:"Agente de Demanda", x:.14, y:.15 },
+    { id:"est", nome:"Agente de Estoque", x:.14, y:.62 },
+    { id:"log", nome:"Agente de Logística", x:.86, y:.15 },
+    { id:"pre", nome:"Agente de Preço", x:.86, y:.62 },
+    { id:"hum", nome:"Humano no gate", x:.50, y:.86, humano:true }
+  ],
+  passos: [
+    { de:"dem", para:"orq", log:"Demanda · pico atípico na região Sul: +38% em 72 h" },
+    { de:"est", para:"orq", log:"Estoque · CD-1 rompe em 6 dias; CD-2 tem excedente de 2 lotes" },
+    { de:"orq", para:"log", log:"Orquestrador · pede janela de transferência CD-2 → CD-1" },
+    { de:"log", para:"orq", log:"Logística · janela amanhã, 04h — custo R$ 18,4 mil" },
+    { de:"orq", para:"pre", log:"Orquestrador · consulta impacto de margem" },
+    { de:"pre", para:"orq", log:"Preço · margem preservada; remarcação desnecessária" },
+    { de:"orq", para:"hum", log:"Plano montado · transferir 2 lotes — enviado ao humano" },
+    { de:"hum", para:"orq", log:"Humano APROVA · execução disparada, com registro completo", lima:true },
+    { de:null, para:null, log:"Ruptura evitada antes de acontecer — decisão rastreável de ponta a ponta", fim:true }
+  ]
+};
+function pararAnim(){ if (ANIM.raf) cancelAnimationFrame(ANIM.raf); ANIM.raf = 0; }
+function iniciarAnim(){
+  const cv = $("#cv"), logp = $("#animlog");
+  if (!cv || !logp) return;
+  const ctx = cv.getContext("2d");
+  const DPR = window.devicePixelRatio || 1;
+  const medir = () => { const r = cv.getBoundingClientRect(); cv.width = Math.max(1, r.width*DPR); cv.height = Math.max(1, r.height*DPR); };
+  medir();
+  const no = id => CENA.nos.find(n => n.id === id);
+  const px = n => [n.x*cv.width, n.y*cv.height];
+  function desenhar(pi, frac){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    const p = pi >= 0 ? CENA.passos[pi] : null;
+    for (const n of CENA.nos){ if (n.id === "orq") continue;
+      const [x1,y1] = px(no("orq")), [x2,y2] = px(n);
+      ctx.strokeStyle = "#3C3D45"; ctx.lineWidth = 1.2*DPR;
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    }
+    if (p && p.de){
+      const [x1,y1] = px(no(p.de)), [x2,y2] = px(no(p.para));
+      const cor = p.lima ? "#C3D93B" : "#A05BD1";
+      ctx.strokeStyle = cor; ctx.lineWidth = 2.2*DPR;
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+      const e = Math.max(0, Math.min(1, frac));
+      const t = e < .5 ? 2*e*e : 1 - Math.pow(-2*e+2, 2)/2;
+      ctx.fillStyle = cor;
+      ctx.beginPath(); ctx.arc(x1+(x2-x1)*t, y1+(y2-y1)*t, 5.5*DPR, 0, 7); ctx.fill();
+    }
+    for (const n of CENA.nos){
+      const [x,y] = px(n); const r = (n.id === "orq" ? 30 : 24)*DPR;
+      const ativo = p && (p.de === n.id || p.para === n.id);
+      ctx.fillStyle = "#2F3036";
+      ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+      ctx.lineWidth = (ativo ? 2.6 : 1.2)*DPR;
+      ctx.strokeStyle = n.humano ? "#C3D93B" : (ativo ? "#A05BD1" : "#3C3D45");
+      ctx.stroke();
+      ctx.fillStyle = ativo ? "#E4E4EA" : "#A3A3AE";
+      ctx.font = (11.5*DPR) + "px Poppins, sans-serif"; ctx.textAlign = "center";
+      const partes = n.nome.split(" ");
+      const l1 = partes.length > 1 ? partes.slice(0, partes.length-1).join(" ") : n.nome;
+      const l2 = partes.length > 1 ? partes[partes.length-1] : "";
+      ctx.fillText(l1, x, y + r + 14*DPR);
+      if (l2) ctx.fillText(l2, x, y + r + 27*DPR);
+    }
+  }
+  const addLog = p => {
+    const d = document.createElement("div");
+    d.className = "logl" + (p.lima ? " lima" : "") + (p.fim ? " fim" : "");
+    d.textContent = p.log;
+    logp.appendChild(d); logp.scrollTop = logp.scrollHeight;
+  };
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches){
+    CENA.passos.forEach(addLog); desenhar(-1, 0); return;
+  }
+  const DUR = 3000;
+  let passo = -1, ini = performance.now();
+  function frame(ts){
+    const el = ts - ini;
+    let np = Math.floor(el / DUR);
+    if (np >= CENA.passos.length + 1){ logp.innerHTML = ""; passo = -1; ini = ts; np = 0; }
+    if (np !== passo && np < CENA.passos.length){ passo = np; addLog(CENA.passos[passo]); }
+    if (passo >= 0) desenhar(Math.min(passo, CENA.passos.length-1), (el - passo*DUR)/1500);
+    ANIM.raf = requestAnimationFrame(frame);
+  }
+  ANIM.raf = requestAnimationFrame(frame);
+}
+
+/* ═══════════ conteúdo dos slides no TELÃO ═══════════ */
+function telaoSlide(sl){
+  const T = {
+    anim(){
+      return '<div><p class="eyebrow">ABERTURA · ISTO JÁ ACONTECE</p>'+
+        '<h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Agentes decidindo juntos — um problema de negócio resolvido em segundos</h1>'+
+        '<p class="muted" style="font-size:13.5px;max-width:72ch">Uma ruptura de estoque prevista. Cinco agentes negociam a resposta entre si; um humano aprova; tudo fica registrado. Acompanhem o log à direita — e reparem na última linha.</p></div>'+
+        '<div class="animGrid"><canvas class="cv" id="cv"></canvas><div class="logp" id="animlog"></div></div>'+
+        '<p class="rodape">Simulação ilustrativa — números fictícios. O padrão (agentes especialistas + orquestração + gate humano) é o mesmo dos projetos publicados em apllos.com/cases.</p>';
+    },
+    capa(){
+      return '<div style="margin-block:auto"><p class="eyebrow">SAB CIO 2026 · SESSÃO APLLOS · 30 MIN</p>'+
+        '<h1 class="titulo1">IA agêntica em produção</h1><h2 class="titulo2">com freio e com prova</h2>'+
+        '<p style="max-width:62ch;font-size:15px">40% das empresas vão desligar ou rebaixar seus agentes de IA até 2027 — não por falta de modelo, <b>por falta de governo</b>. Esta sessão é uma conversa conduzida por votação: seis provocações, voto anônimo pelo celular, e a discussão nasce dos números <b>desta sala</b>.</p>'+
+        '<div class="chips" style="margin-top:10px">'+["Três recados do mercado","Seis provocações","Votação anônima","A sala fala","O que os 21% fazem diferente"].map(c=>'<span class="pill">'+c+'</span>').join("")+'</div></div>';
+    },
+    apresentador(){
+      return '<div style="margin-block:auto"><p class="eyebrow">QUEM CONDUZ A SESSÃO</p>'+
+        '<h1 class="titulo1" style="font-size:clamp(24px,3.4vw,44px)">Thiago Albieri</h1>'+
+        '<p style="color:var(--roxo);font-weight:600;font-size:17px;margin:4px 0 2px">Sócio · Dados & IA</p>'+
+        '<p class="muted" style="font-size:13.5px;margin-top:0">Apllos — consultoria brasileira de tecnologia e transformação digital</p>'+
+        '<ul style="max-width:70ch;display:flex;flex-direction:column;gap:8px;font-size:14.5px;padding-left:18px">'+
+        ["Liderança estratégica e comercial de projetos de tecnologia e transformação digital",
+         "Co-criou e desenvolveu duas das práticas da Apllos · ~60 profissionais sob gestão",
+         "Experiência prática em SAP, supply chain, plataformas digitais, integração, dados e IA",
+         "Projetos de grande escala e alta criticidade em indústria, bens de consumo e serviços financeiros",
+         "Foco atual: transformar IA em resultado empresarial — estratégia, governança, adoção e ROI"].map(b=>'<li>'+b+'</li>').join("")+'</ul>'+
+        '<div class="chips" style="margin-top:12px">'+["Dados & IA","Supply Chain","Digital & Integração","Experiência & Processos"].map(c=>'<span class="pill">'+c+'</span>').join("")+'</div></div>';
+    },
+    recados(){
+      const G = [
+        ["1 · O FRACASSO JÁ COMEÇOU", [
+          ["40%","vão desligar ou rebaixar seus agentes até 2027","governança e custo — Gartner, 05/2026"],
+          ["82%","já têm agentes que a própria TI desconhece","shadow agents — Cloud Security Alliance, 04/2026"]]],
+        ["2 · GUARDRAIL NÃO GOVERNA A EMPRESA", [
+          ["De fábrica","guardrail virou item embutido das nuvens","3 fabricantes comprados em 12 meses — filtra o modelo, não o processo"],
+          ["0","nativos executam a política DA SUA empresa entre nuvens","cada nuvem governa só a si"]]],
+        ["3 · O CONTROLE JÁ É COBRADO — HOJE", [
+          ["2%","do faturamento: sanção LGPD se agente tocar dado sem prova","agente também é tratamento de dados — ANPD"],
+          ["21%","apenas têm governança madura para responder","Deloitte, 08/2026 — auditoria e ISO 42001 já cobram"]]]
+      ];
+      return '<div><p class="eyebrow">A PROVOCAÇÃO · QUEM GOVERNA O QUE VOCÊS ACABARAM DE VER?</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">O enxame funciona. Sem governo, 2026 documentou o que acontece:</h1></div>'+
+        '<div class="grid3">'+G.map(([t,cards]) => '<div><p class="grupoT">'+t+'</p><div style="display:flex;flex-direction:column;gap:10px">'+
+          cards.map(([v,b,s])=>'<div class="kpi"><span class="valor">'+v+'</span><b>'+b+'</b><span>'+s+'</span></div>').join("")+'</div></div>').join("")+'</div>'+
+        '<div class="statement"><b>A soma:</b> todo mundo acelera, o guardrail de fábrica não governa a SUA operação — e a prova já é exigida por lei.</div>';
+    },
+    mecanica(){
+      const P = [["Provocação","Oito perguntas diretas — de agentes a estrutura de dados"],["Voto anônimo","Pelo QR, no celular — 30 segundos"],
+        ["Resultado na hora","A distribuição da sala aparece aqui"],["A sala fala","Quem quiser defende sua resposta"],
+        ["Contraste","Sala × números de mercado"],["Síntese","A fotografia de maturidade da sala no final"]];
+      return '<div><p class="eyebrow">COMO VAI FUNCIONAR</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Vocês conduzem esta sessão</h1></div>'+
+        '<div class="passos">'+P.map(([t,d])=>'<div class="passo-c"><b>'+t+'</b><span>'+d+'</span></div>').join("")+'</div>'+
+        '<div class="statement"><b>Regra da casa:</b> não existe resposta errada — existe fotografia honesta. O voto é anônimo justamente para isso.</div>'+
+        '<p class="muted" style="font-size:13px">Aponte a câmera para o QR ao lado — a primeira pergunta é só um teste.</p>';
+    },
+    voto(){
+      const q = PERGUNTAS[sl.q];
+      const { total } = contagem(sl.q);
+      let corpo = "";
+      if (SES.estado === "resultado")
+        corpo = '<div class="card">'+barras(sl.q)+'<p class="bench"><b>Contraste</b> · '+esc(q.bench)+'</p></div>'+
+          '<div class="statement"><b>Depois do voto:</b> '+esc(q.gancho)+'</div>';
+      else if (SES.estado === "aberta")
+        corpo = '<div class="card"><p style="font-size:15px">Votos recebidos: <span class="contador">'+total+'</span></p>'+
+          '<p class="muted" style="font-size:13px">O resultado aparece quando for revelado — vote sem olhar para o vizinho.</p></div>'+
+          '<div class="opts">'+q.opcoes.map(([l,t])=>'<div class="opt" style="cursor:default"><span class="letra">'+l+'</span><span>'+esc(t)+'</span></div>').join("")+'</div>';
+      else
+        corpo = '<div class="opts">'+q.opcoes.map(([l,t])=>'<div class="opt" style="cursor:default;opacity:.75"><span class="letra">'+l+'</span><span>'+esc(t)+'</span></div>').join("")+
+          '</div><p class="muted" style="font-size:13px">Votação ainda fechada — abra quando a sala estiver pronta.</p>';
+      return '<div><p class="eyebrow">'+esc(q.rotulo)+(SES.estado==="aberta"?' · VOTAÇÃO ABERTA':SES.estado==="resultado"?' · RESULTADO':'')+'</p>'+
+        '<h1 class="q">'+esc(q.pergunta)+'</h1></div>'+corpo;
+    },
+    foto(){
+      return '<div><p class="eyebrow">SÍNTESE · PARTE 1</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">A fotografia desta sala</h1></div>'+fotografia(false)+
+        '<p class="rodape">Números = votos reais da sessão. Índice de maturidade é leitura ilustrativa; a régua formal sai de assessment.</p>';
+    },
+    sintese(){
+      const C = [
+        ["Política executável","não declaratória",["Regra de arquitetura é verificação que RODA","O agente tenta, é bloqueado, corrige — e fica registrado","Exceção existe — com prazo e com dono","Responde às provocações 2 e 3"]],
+        ["Humano no gate","por desenho, não por gargalo",["Não existe 'aprovar tudo'","Aprovação amarra revisor + tarefa + hash do código","Código mudou? A aprovação cai sozinha","Responde à provocação 8"]],
+        ["Dados governados na base","o agente herda a maturidade do dado",["Catálogo, qualidade e lineage ANTES do agente","Resposta errada rastreia até a origem em minutos","Plataforma governada, não planilha intermediária","Responde às provocações 5 e 6"]],
+        ["Soberania radical","o contexto não sai de casa",["Código, prompts e evidência na nuvem DO CLIENTE","Custo por caso de uso, com teto — o CFO enxerga","Trilha imutável: quem, o quê, com que regra, a que custo","Responde às provocações 1 e 4"]]
+      ];
+      return '<div><p class="eyebrow">SÍNTESE · PARTE 2</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">O que a sala disse — e o que os 21% fazem diferente</h1></div>'+
+        '<div class="grid3">'+C.map(([t,s,b])=>'<div class="coluna"><h3>'+t+'</h3><p class="sub">'+s+'</p><ul>'+b.map(x=>'<li>'+x+'</li>').join("")+'</ul></div>').join("")+'</div>';
+    },
+    quem(){
+      const K = [["28","cases publicados, com desafio e resultado","apllos.com/cases"],
+        ["3.000+","usuários num hub de IA corporativo","indústria siderúrgica — operação 24/7"],
+        ["R$ 41 M/ano","de oportunidade mapeada em analytics de fretes","resultado publicado do case"],
+        ["3m → 2sem","ciclo de um novo caso de uso de IA","quando a esteira substitui o projeto isolado"],
+        ["5","frentes integradas","Agentes de IA · Dados · Supply · Plataformas · Experiência"],
+        ["Multicloud","AWS · Azure · Databricks · SAP","federação, não abstração"]];
+      return '<div><p class="eyebrow">QUEM ESTÁ FALANDO — EM NÚMEROS PUBLICADOS</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Por que só agora este slide: a credencial vem depois da prova</h1></div>'+
+        '<div class="grid3">'+K.map(([v,b,s])=>'<div class="kpi"><span class="valor">'+v+'</span><b>'+b+'</b><span>'+s+'</span></div>').join("")+'</div>';
+    },
+    nove(){
+      return '<div><p class="eyebrow">PARA LEVAR PARA O COMITÊ</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Nove perguntas que testam qualquer programa — o nosso incluído</h1></div>'+
+        '<div class="card"><ol class="nove">'+NOVE.map(p=>'<li>'+p+'</li>').join("")+'</ol></div>'+
+        '<div class="statement"><b>O teste honesto:</b> quem não aguentar respondê-las não deveria estar no seu shortlist. As perguntas estão agora no celular de vocês.</div>';
+    },
+    cta(){
+      const P = [["A régua na sua empresa",["Assessment das 8 dimensões","Inventário de agentes + gaps priorizados","Entregável: régua + roadmap executivo"]],
+        ["O trilho no seu contexto",["Sessão de desenho com arquitetura e segurança","O ciclo do card no SEU processo e nuvem","Entregável: blueprint de aderência"]],
+        ["Um caso de uso na esteira",["Piloto governado de ponta a ponta","Caso real, custo medido, evidência desde o dia 1","Entregável: caso em produção + trilho reutilizável"]]];
+      return '<div><p class="eyebrow">TRÊS CONVERSAS PARA OS INTERVALOS</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Uma das nove perguntas sem resposta? Nos encontre no intervalo.</h1></div>'+
+        '<div class="grid3">'+P.map(([t,b])=>'<div class="coluna"><h3 style="font-size:15px">'+t+'</h3><ul>'+b.map(x=>'<li>'+x+'</li>').join("")+'</ul></div>').join("")+'</div>'+
+        '<div class="statement"><b>www.apllos.com</b> · material da sessão (números com fonte + as nove perguntas) disponível com a organização.</div>';
+    }
+  };
+  return T[sl.tipo]();
+}
+
+/* ═══════════ conteúdo no CELULAR — o QR serve SÓ para votar ═══════════ */
+function foneSlide(sl){
+  if (sl.tipo === "voto" && SES.estado === "aberta") {
+    const q = PERGUNTAS[sl.q];
+    const votei = meusVotos[sl.q];
+    return '<div><p class="eyebrow">'+esc(q.rotulo)+'</p><h2 class="q">'+esc(q.pergunta)+'</h2></div>'+
+      '<div class="opts">'+q.opcoes.map(([l,t])=>'<button class="opt'+(votei===l?' sel':'')+'" data-q="'+sl.q+'" data-op="'+l+'"><span class="letra">'+l+'</span><span>'+esc(t)+'</span></button>').join("")+'</div>'+
+      (votei ? '<p class="pill on">Voto registrado: '+votei+' — dá para mudar enquanto estiver aberta.</p>'
+             : '<p class="pill">Toque numa opção para votar — anônimo.</p>');
+  }
+  if (sl.tipo === "voto" && SES.estado === "resultado") {
+    const votei = meusVotos[sl.q];
+    return '<div class="card"><p class="eyebrow">'+esc(PERGUNTAS[sl.q].rotulo)+'</p><span class="check">✓</span>'+
+      '<h2 style="font-size:19px">Votação encerrada.</h2>'+
+      '<p class="muted" style="font-size:13.5px">O resultado está no telão'+(votei ? ' — seu voto foi '+votei : '')+'. A próxima pergunta abre sozinha aqui.</p></div>';
+  }
+  if (sl.tipo === "cta")
+    return '<div class="card"><p class="eyebrow">OBRIGADO</p><span class="check">✓</span>'+
+      '<h2 style="font-size:19px">Sessão encerrada.</h2>'+
+      '<p style="font-size:14px"><b>www.apllos.com</b></p>'+
+      '<p class="muted" style="font-size:12.5px">Material da sessão (números com fonte + as nove perguntas para o comitê) com a organização — ou fale com a Apllos no intervalo.</p></div>';
+  return '<div class="card"><p class="eyebrow">Aguarde</p><h2 style="font-size:19px">A próxima votação abre aqui sozinha.</h2>'+
+    '<p class="muted" style="font-size:13.5px">Mantenha esta página aberta e acompanhe o telão.</p></div>';
+}
+
+/* ═══════════ VISÃO PARTICIPANTE ═══════════ */
+function vistaVotante(){
+  const sl = slideAtual();
+  app.innerHTML = '<div class="wrap">'+
+    '<div class="headline"><span class="logo">Apllos<b>.</b></span><span class="pill">SAB CIO 2026 · voto anônimo</span></div>'+
+    (DEMO ? '<div class="aviso"><b>MODO DEMO</b> — sem banco: os votos ficam só neste navegador.</div>' : "")+
+    foneSlide(sl)+'</div>';
+  app.querySelectorAll(".opt[data-op]").forEach(b => b.addEventListener("click", async () => {
+    const qid = b.dataset.q, op = b.dataset.op;
+    meusVotos[qid] = op; lsSet("vs_meus", meusVotos);
+    ultimaAssinatura = ""; render();
+    try { await store.addVoto(qid, op, VOTANTE); } catch(e){}
+  }));
+}
+
+/* ═══════════ VISÃO TELÃO ═══════════ */
+let pinOk = false;
+function vistaTelao(){
+  if (!pinOk) {
+    app.innerHTML = '<div class="wrap"><div class="headline"><span class="logo">Apllos<b>.</b></span></div>'+
+      '<div class="card"><p class="eyebrow">Modo telão</p><h2 style="font-size:19px">Chave do facilitador</h2>'+
+      '<div style="display:flex;gap:8px;margin-top:10px"><input class="pin" id="pin" type="password" autocomplete="off">'+
+      '<button class="btn" id="entrar">Entrar</button></div><p class="muted" id="pinerro" style="font-size:12px"></p></div></div>';
+    $("#entrar").addEventListener("click", () => {
+      if ($("#pin").value === CONFIG.PIN_TELAO) { pinOk = true; ultimaAssinatura=""; render(); }
+      else $("#pinerro").textContent = "Chave incorreta.";
+    });
+    $("#pin").addEventListener("keydown", e => { if (e.key === "Enter") $("#entrar").click(); });
+    return;
+  }
+  const sl = slideAtual();
+  const ehVoto = sl.tipo === "voto";
+  const mostraQR = ehVoto || sl.tipo === "mecanica";
+  const urlVoto = location.origin + location.pathname + location.search;
+  const palco = '<div class="palco">'+telaoSlide(sl)+'</div>';
+  const lateral = mostraQR ?
+    '<div class="qrbox"><div id="qr"></div><b style="font-size:13.5px">Acompanhe e vote pelo celular</b>'+
+    '<span class="url">'+esc(urlVoto)+'</span><span class="muted" style="font-size:11px">1 voto por pessoa · anônimo</span></div>' : "";
+  app.innerHTML = '<div class="telaoWrap">'+
+    '<div class="headline"><span class="logo" style="font-size:18px">Apllos<b>.</b></span>'+
+    '<span class="pill">SAB CIO 2026 · governança de IA agêntica</span></div>'+
+    (DEMO ? '<div class="aviso"><b>MODO DEMO</b> — votos simulados neste navegador. Outra aba sem #telao = participante.</div>' : "")+
+    (mostraQR ? '<div class="grade">'+palco+'<div>'+lateral+'</div></div>' : palco)+
+    '<div class="controles">'+
+    '<button class="btn ghost" id="ant">←</button>'+
+    '<span class="passo">'+(SES.idx+1)+' / '+SLIDES.length+'</span>'+
+    '<button class="btn ghost" id="prox">→</button>'+
+    (ehVoto ? '<button class="btn" id="abrir"'+(SES.estado==="aberta"?" disabled":"")+'>Abrir votação</button>'+
+              '<button class="btn ghost" id="revelar"'+(SES.estado==="resultado"?" disabled":"")+'>Revelar resultado</button>' : "")+
+    (DEMO && ehVoto ? '<button class="btn ghost" id="simular">Simular 25 votos</button>' : "")+
+    '<button class="btn ghost" id="zerar" style="margin-left:auto">Zerar votos</button></div></div>';
+  if (mostraQR) { try { new QRCode($("#qr"), { text:urlVoto, width:170, height:170, colorDark:"#212226", colorLight:"#ffffff" }); } catch(e){} }
+  pararAnim();
+  if (sl.tipo === "anim") iniciarAnim();
+  const mudar = async p => { await store.setSessao(p); ultimaAssinatura=""; await refresh(); };
+  $("#ant").addEventListener("click", () => mudar({ idx:Math.max(0, SES.idx-1), estado:"aguardando" }));
+  $("#prox").addEventListener("click", () => mudar({ idx:Math.min(SLIDES.length-1, SES.idx+1), estado:"aguardando" }));
+  if (ehVoto) {
+    $("#abrir").addEventListener("click", () => mudar({ estado:"aberta" }));
+    $("#revelar").addEventListener("click", () => mudar({ estado:"resultado" }));
+    const sim = $("#simular");
+    if (sim) sim.addEventListener("click", async () => {
+      const q = PERGUNTAS[sl.q];
+      for (let i=0;i<25;i++){
+        const ops = q.opcoes.map(o=>o[0]);
+        const op = ops[Math.min(ops.length-1, Math.floor(Math.pow(Math.random(),1.4)*ops.length))];
+        await store.addVoto(sl.q, op, "demo"+i+Math.random().toString(36).slice(2,6));
+      }
+      ultimaAssinatura=""; await refresh();
+    });
+  }
+  $("#zerar").addEventListener("click", async () => { await store.limpar(); ultimaAssinatura=""; await refresh(); });
+  if (navigator.wakeLock && !vistaTelao._wl) { navigator.wakeLock.request("screen").then(w=>{vistaTelao._wl=w;}).catch(()=>{}); }
+}
+window.addEventListener("keydown", async e => {
+  if (!TELAO || !pinOk) return;
+  if (e.key === "ArrowRight") { await store.setSessao({ idx:Math.min(SLIDES.length-1, SES.idx+1), estado:"aguardando" }); ultimaAssinatura=""; refresh(); }
+  if (e.key === "ArrowLeft")  { await store.setSessao({ idx:Math.max(0, SES.idx-1), estado:"aguardando" }); ultimaAssinatura=""; refresh(); }
+  if (e.key === "Enter" && slideAtual().tipo === "voto") {
+    await store.setSessao({ estado: SES.estado === "aberta" ? "resultado" : "aberta" }); ultimaAssinatura=""; refresh();
+  }
+});
+
+/* ═══════════ loop de sincronização ═══════════ */
+function render(){ TELAO ? vistaTelao() : vistaVotante(); }
+async function refresh(){
+  try {
+    SES = await store.getSessao();
+    VOTOS = await store.getVotos();
+  } catch(e){}
+  if (typeof SES.idx !== "number") SES.idx = 0;
+  const sl = slideAtual();
+  const relevante = (sl.tipo === "voto" && SES.estado !== "aguardando") || sl.tipo === "foto";
+  const assin = JSON.stringify([SES, TELAO && !pinOk, relevante ? VOTOS : 0]);
+  if (assin !== ultimaAssinatura) { ultimaAssinatura = assin; render(); }
+}
+refresh();
+setInterval(refresh, 2500);
+window.addEventListener("storage", refresh);
+</script>
+
+</body>
+</html>
