@@ -214,6 +214,7 @@ const SLIDES = [
   { tipo:"foto" },
   { tipo:"dmbok" },
   { tipo:"sintese" },
+  { tipo:"iafirst" },
   { tipo:"custo" },
   { tipo:"nove" },
   { tipo:"cta" },
@@ -609,15 +610,7 @@ function telaoSlide(sl){
       ];
       return '<div><p class="eyebrow">SÍNTESE · O QUE FAZER</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">O que a sala disse — e o que os 21% fazem diferente</h1></div>'+
         '<div class="grid3">'+C.map(([t,s,b])=>'<div class="coluna"><h3>'+t+'</h3><p class="sub">'+s+'</p><ul>'+b.map(x=>'<li>'+x+'</li>').join("")+'</ul></div>').join("")+'</div>'+
-        '<div><p class="grupoT" style="margin:2px 0 8px">NO CHÃO DA ENGENHARIA — COMO ISSO SE MATERIALIZA</p>'+
-        '<div class="passos" style="grid-template-columns:repeat(auto-fit,minmax(205px,1fr))">'+
-        [["Metodologia vira contexto","DDD e SDD deixam de ser slide: viram instruções e specs que o agente segue"],
-         ["Harness corporativo","UM orquestrador definido pela empresa — não cada squad com o seu"],
-         ["Guardrails corporativos","aplicados pelo harness, valendo para qualquer modelo — não dependem de obediência"],
-         ["Skills reutilizáveis","o que um time aprende vira skill versionada dos outros — o conhecimento não morre no herói"],
-         ["Evals como gate","qualidade medida por avaliação automatizada — limiar de release, não opinião"]]
-        .map(([a,b])=>'<div class="passo-c"><b>'+a+'</b><span>'+b+'</span></div>').join("")+'</div></div>'+
-        '<div class="statement">E sim — <b>temos um case de governança aplicando essa lente</b>; quem quiser ver como foi, nos encontre no intervalo.</div>';
+        '<p class="muted" style="font-size:12.5px">E como isso aterrissa? O próximo quadro mostra o caminho — engenharia e organização, juntas.</p>';
     },
     dmbok(){
       const A = [
@@ -637,6 +630,29 @@ function telaoSlide(sl){
           '<span class="pill" style="font-size:10.5px">na sessão de hoje: '+p+'</span></div>').join("")+'</div>'+
         '<div class="statement">Quem já tem o DMBOK na casa está mais perto do que imagina — <b>falta projetá-lo sobre os agentes</b>. É disso que trata o próximo quadro.</div>'+
         '<p class="rodape">DAMA-DMBOK® é marca da DAMA International — usada aqui como referência de mercado, sem endosso.</p>';
+    },
+    iafirst(){
+      const ENG = [
+        ["Metodologia vira contexto","DDD e SDD deixam de ser slide: viram instruções e specs que o agente segue"],
+        ["Harness corporativo","UM orquestrador definido pela empresa — não cada squad com o seu"],
+        ["Guardrails corporativos","aplicados pelo harness, valendo para qualquer modelo"],
+        ["Skills reutilizáveis","o que um time aprende vira skill versionada dos outros"],
+        ["Evals como gate","qualidade por avaliação automatizada — limiar de release, não opinião"]];
+      const ORG = [
+        ["Necessidades corporativas primeiro","o caso de uso nasce da dor do negócio mapeada — nunca da ferramenta disponível"],
+        ["Processos redesenhados","rituais, medição e esteira mudam junto: a régua de ontem não mede o trabalho de hoje"],
+        ["Adoção além da engenharia","produto, operação e negócio no mesmo ciclo — só dev adotando não vira resultado"],
+        ["Treinamento e cultura","conversa aberta sobre papéis e medo; champions por área"],
+        ["Gates por evidência","sandbox governado → produção; escala só com prova, não com roadmap fixo"]];
+      const linha = (rot, its) => '<div><p class="grupoT" style="margin:2px 0 8px">'+rot+'</p>'+
+        '<div class="passos" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">'+
+        its.map(([a,b])=>'<div class="passo-c"><b>'+a+'</b><span>'+b+'</span></div>').join("")+'</div></div>';
+      return '<div><p class="eyebrow">SÍNTESE · O CAMINHO</p>'+
+        '<h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Chegar a IA-first é um programa — não uma compra</h1>'+
+        '<p class="muted" style="font-size:12.5px;max-width:80ch">Duas trilhas que andam juntas: a engenharia que governa os agentes e a organização que os absorve. Quem toca só uma delas fica no piloto eterno.</p></div>'+
+        linha("TRILHA DE ENGENHARIA", ENG)+
+        linha("TRILHA DA ORGANIZAÇÃO", ORG)+
+        '<div class="statement">E sim — <b>temos um case de governança aplicando essa lente</b>; quem quiser ver como foi, nos encontre no intervalo.</div>';
     },
     custo(){
       return '<div style="margin-block:auto;display:flex;flex-direction:column;gap:16px;max-width:88ch">'+
