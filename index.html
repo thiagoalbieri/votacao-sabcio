@@ -105,6 +105,7 @@
   input.pin{background:var(--card2); color:var(--texto); border:1px solid var(--line); border-radius:8px; padding:12px; font:inherit; width:100%; box-sizing:border-box}
   .check{color:var(--lima); font-family:Montserrat; font-weight:800; font-size:40px}
   ol.nove{margin:0; padding-left:22px; display:flex; flex-direction:column; gap:9px; font-size:14px}
+  .radarCv{width:100%; height:min(46vh,430px); display:block}
   .glinha{display:flex; gap:10px; align-items:center; padding:5px 0; font-size:12.8px; color:var(--muted)}
   .glinha .letra{flex:0 0 26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center;
     background:var(--card2); border:1px solid var(--line); color:var(--muted); font-family:Montserrat; font-weight:800; font-size:12px}
@@ -308,12 +309,70 @@ function fotografia(compacta){
       (iAg != null ? '<span class="pill on">Agentes & governança: '+iAg.toFixed(1)+'</span>' : '')+
       (iDa != null ? '<span class="pill" style="border-color:var(--teal);color:var(--teal)">Estrutura de dados: '+iDa.toFixed(1)+'</span>' : '')+
       '</div></div></div>';
-  if (!compacta)
-    html += '<div class="fotoGrid">'+ ["p1","p2","p3","p4","p5","p6","p7","p8"].map(id => {
-      const m = mediaScore(id);
-      return '<div class="card mini"><h3>'+esc(PERGUNTAS[id].rotulo)+(m!=null?' — média '+m.toFixed(1):'')+'</h3>'+barras(id,true)+'</div>';
-    }).join("") + '</div>';
+  if (!compacta) html += minisFoto();
   return html || '<div class="card"><p class="muted">Ainda sem votos suficientes.</p></div>';
+}
+function minisFoto(){
+  return '<div class="fotoGrid">'+ ["p1","p2","p3","p4","p5","p6","p7","p8"].map(id => {
+    const m = mediaScore(id);
+    return '<div class="card mini"><h3>'+esc(PERGUNTAS[id].rotulo)+(m!=null?' — média '+m.toFixed(1):'')+'</h3>'+barras(id,true)+'</div>';
+  }).join("") + '</div>';
+}
+const RADAR_DIMS = [
+  { id:"p1", lb:"Inventário" }, { id:"p2", lb:"Política" }, { id:"p3", lb:"Violação" },
+  { id:"p4", lb:"Custo" }, { id:"p5", lb:"Dados: fonte" }, { id:"p6", lb:"Lineage" },
+  { id:"p8", lb:"Auditoria" }
+];
+function desenharRadar(){
+  const cv = $("#radar");
+  if (!cv) return;
+  const ctx = cv.getContext("2d");
+  const DPR = window.devicePixelRatio || 1;
+  const r0 = cv.getBoundingClientRect();
+  cv.width = Math.max(1, r0.width*DPR); cv.height = Math.max(1, r0.height*DPR);
+  const cx = cv.width/2, cy = cv.height/2 + 4*DPR;
+  const R = Math.min(cv.width, cv.height)/2 - 46*DPR;
+  const N = RADAR_DIMS.length;
+  const ang = i => -Math.PI/2 + i*2*Math.PI/N;
+  const pt = (i, v) => [cx + Math.cos(ang(i))*R*(v/4), cy + Math.sin(ang(i))*R*(v/4)];
+  // anéis 1..4
+  for (let nivel = 1; nivel <= 4; nivel++){
+    ctx.beginPath();
+    for (let i = 0; i <= N; i++){ const [x,y] = pt(i%N, nivel); i ? ctx.lineTo(x,y) : ctx.moveTo(x,y); }
+    ctx.strokeStyle = nivel === 4 ? "#4A4B55" : "#3C3D45"; ctx.lineWidth = 1*DPR; ctx.stroke();
+  }
+  // eixos + rótulos
+  ctx.font = (11*DPR)+"px Poppins, sans-serif"; ctx.textAlign = "center";
+  for (let i = 0; i < N; i++){
+    const [x,y] = pt(i, 4);
+    ctx.strokeStyle = "#3C3D45"; ctx.lineWidth = 1*DPR;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x,y); ctx.stroke();
+    const [lx,ly] = [cx + Math.cos(ang(i))*(R + 26*DPR), cy + Math.sin(ang(i))*(R + 22*DPR)];
+    const m = mediaScore(RADAR_DIMS[i].id);
+    ctx.fillStyle = m != null ? "#E4E4EA" : "#A3A3AE";
+    ctx.fillText(RADAR_DIMS[i].lb, lx, ly);
+    if (m != null){ ctx.fillStyle = "#C3D93B"; ctx.fillText(m.toFixed(1), lx, ly + 14*DPR); }
+  }
+  // marcas de escala no eixo vertical
+  ctx.fillStyle = "#A3A3AE"; ctx.textAlign = "left";
+  for (let nivel = 1; nivel <= 4; nivel++)
+    ctx.fillText(String(nivel), cx + 4*DPR, cy - R*(nivel/4) + 12*DPR);
+  // polígono das médias
+  const vals = RADAR_DIMS.map(d => mediaScore(d.id));
+  if (vals.some(v => v != null)){
+    ctx.beginPath();
+    for (let i = 0; i <= N; i++){ const [x,y] = pt(i%N, vals[i%N] || 0); i ? ctx.lineTo(x,y) : ctx.moveTo(x,y); }
+    ctx.closePath();
+    ctx.fillStyle = "rgba(160,91,209,.22)"; ctx.fill();
+    ctx.strokeStyle = "#A05BD1"; ctx.lineWidth = 2*DPR; ctx.stroke();
+    for (let i = 0; i < N; i++){ if (vals[i] == null) continue;
+      const [x,y] = pt(i, vals[i]);
+      ctx.fillStyle = "#C3D93B"; ctx.beginPath(); ctx.arc(x, y, 4*DPR, 0, 7); ctx.fill();
+    }
+  } else {
+    ctx.fillStyle = "#A3A3AE"; ctx.textAlign = "center";
+    ctx.fillText("Ainda sem votos pontuáveis", cx, cy);
+  }
 }
 
 /* ═══════════ animação multi-agente (abertura) ═══════════ */
@@ -485,7 +544,12 @@ function telaoSlide(sl){
         '<h1 class="q">'+esc(q.pergunta)+'</h1></div>'+corpo;
     },
     foto(){
-      return '<div><p class="eyebrow">SÍNTESE · PARTE 1</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">A fotografia desta sala</h1></div>'+fotografia(false)+
+      return '<div><p class="eyebrow">SÍNTESE · PARTE 1</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">A fotografia desta sala</h1></div>'+
+        '<div class="animGrid" style="grid-template-columns:minmax(0,1fr) 380px">'+
+        '<div class="card" style="padding:8px"><canvas class="radarCv" id="radar"></canvas></div>'+
+        '<div style="display:flex;flex-direction:column;gap:12px">'+fotografia(true)+
+        '<p class="muted" style="font-size:12px">Radar: média da sala por dimensão (escala 1–4). Detalhe pergunta a pergunta abaixo.</p></div></div>'+
+        minisFoto()+
         '<p class="rodape">Números = votos reais da sessão. Índice de maturidade é leitura ilustrativa; a régua formal sai de assessment.</p>';
     },
     sintese(){
@@ -614,6 +678,7 @@ function vistaTelao(){
   if (mostraQR) { try { new QRCode($("#qr"), { text:urlVoto, width:170, height:170, colorDark:"#212226", colorLight:"#ffffff" }); } catch(e){} }
   pararAnim();
   if (sl.tipo === "anim") iniciarAnim();
+  if (sl.tipo === "foto") desenharRadar();
   const mudar = async p => { await store.setSessao(p); ultimaAssinatura=""; await refresh(); };
   $("#ant").addEventListener("click", () => mudar({ idx:Math.max(0, SES.idx-1), estado:"aguardando" }));
   $("#prox").addEventListener("click", () => mudar({ idx:Math.min(SLIDES.length-1, SES.idx+1), estado:"aguardando" }));
