@@ -172,7 +172,15 @@ const PERGUNTAS = {
     opcoes:[["A","Horas — está tudo registrado"],["B","Dias — dá trabalho, mas sai"],["C","Semanas — vira caça a prints e e-mails"],["D","Não conseguiríamos montar"]],
     scores:{A:4,B:3,C:2,D:1}, bench:"LGPD já exige prova hoje: agente também é tratamento de dados (sanção até 2% do faturamento).",
     gancho:"Quem votou C ou D: o que falta para virar horas?",
-    ganchos:{ A:"Horas = trilha automática — vocês já estão a um passo da ISO 42001.",B:"Dias hoje; auditor e ANPD vão pedir horas amanhã.",C:"Caça a prints repete o custo a cada auditoria — trilha imutável zera esse retrabalho.",D:"Sem prova de tratamento, a sanção LGPD chega a 2% do faturamento (teto R$ 50 mi)." } }
+    ganchos:{ A:"Horas = trilha automática — vocês já estão a um passo da ISO 42001.",B:"Dias hoje; auditor e ANPD vão pedir horas amanhã.",C:"Caça a prints repete o custo a cada auditoria — trilha imutável zera esse retrabalho.",D:"Sem prova de tratamento, a sanção LGPD chega a 2% do faturamento (teto R$ 50 mi)." } },
+  p9: { rotulo:"Provocação 9 · Modelo", pergunta:"Quem governa a IA na sua organização hoje?",
+    opcoes:[["A","Um órgão central — comitê ou CoE aprova caso a caso"],["B","Cada área cuida da sua própria IA"],["C","Híbrido — regras e plataforma centrais, execução nas áreas"],["D","Ninguém formalmente — ainda está se organizando"]],
+    scores:null, bench:"O debate do momento: central × descentralizado. O consenso que emerge é FEDERAR — política e plataforma centrais, execução nos domínios; o mesmo desenho que o data mesh consagrou como governança federada.",
+    gancho:"Quem opera o híbrido: onde ficou o poder de veto?",
+    ganchos:{ A:"Centralização pura escala? Quantos casos por semana o comitê aguenta antes de virar a fila que todo mundo contorna?",
+      B:"Descentralização sem regra comum é como nascem os 82% de shadow agents (CSA).",
+      C:"O modelo que os analistas convergem: centralize o FREIO, descentralize a DIREÇÃO — quem aqui já faz isso com dados (data mesh) está a um passo.",
+      D:"Sem dono, a governança acontece do mesmo jeito — só que pelo incidente." } }
 };
 const NIVEIS = ["", "1 · Inicial", "2 · Repetível", "3 · Definido", "4 · Gerenciado"];
 
@@ -191,6 +199,7 @@ const SLIDES = [
   { tipo:"voto", q:"p6" },
   { tipo:"voto", q:"p7" },
   { tipo:"voto", q:"p8" },
+  { tipo:"voto", q:"p9" },
   { tipo:"foto" },
   { tipo:"dmbok" },
   { tipo:"sintese" },
@@ -316,7 +325,7 @@ function fotografia(compacta){
   return html || '<div class="card"><p class="muted">Ainda sem votos suficientes.</p></div>';
 }
 function minisFoto(){
-  return '<div class="fotoGrid">'+ ["p1","p2","p3","p4","p5","p6","p7","p8"].map(id => {
+  return '<div class="fotoGrid">'+ ["p1","p2","p3","p4","p5","p6","p7","p8","p9"].map(id => {
     const m = mediaScore(id);
     return '<div class="card mini"><h3>'+esc(PERGUNTAS[id].rotulo)+(m!=null?' — média '+m.toFixed(1):'')+'</h3>'+barras(id,true)+'</div>';
   }).join("") + '</div>';
@@ -515,7 +524,7 @@ function telaoSlide(sl){
         '<div class="statement"><b>A soma:</b> todo mundo acelera, o guardrail de fábrica não governa a SUA operação — e a prova já é exigida por lei.</div>';
     },
     mecanica(){
-      const P = [["Provocação","Oito perguntas diretas — de agentes a estrutura de dados"],["Voto anônimo","Pelo QR, no celular — 30 segundos"],
+      const P = [["Provocação","Nove perguntas diretas — de agentes a modelo de governo"],["Voto anônimo","Pelo QR, no celular — 30 segundos"],
         ["Resultado na hora","A distribuição da sala aparece aqui"],["A sala fala","Quem quiser defende sua resposta"],
         ["Contraste","Sala × números de mercado"],["Síntese","A fotografia de maturidade da sala no final"]];
       return '<div><p class="eyebrow">CONNECT SESSION · A DINÂMICA</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Bem-vindos — vocês conduzem esta sessão</h1></div>'+
