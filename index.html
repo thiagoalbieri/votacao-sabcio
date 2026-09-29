@@ -609,6 +609,14 @@ function telaoSlide(sl){
       ];
       return '<div><p class="eyebrow">SÍNTESE · O QUE FAZER</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">O que a sala disse — e o que os 21% fazem diferente</h1></div>'+
         '<div class="grid3">'+C.map(([t,s,b])=>'<div class="coluna"><h3>'+t+'</h3><p class="sub">'+s+'</p><ul>'+b.map(x=>'<li>'+x+'</li>').join("")+'</ul></div>').join("")+'</div>'+
+        '<div><p class="grupoT" style="margin:2px 0 8px">NO CHÃO DA ENGENHARIA — COMO ISSO SE MATERIALIZA</p>'+
+        '<div class="passos" style="grid-template-columns:repeat(auto-fit,minmax(205px,1fr))">'+
+        [["Metodologia vira contexto","DDD e SDD deixam de ser slide: viram instruções e specs que o agente segue"],
+         ["Harness corporativo","UM orquestrador definido pela empresa — não cada squad com o seu"],
+         ["Guardrails corporativos","aplicados pelo harness, valendo para qualquer modelo — não dependem de obediência"],
+         ["Skills reutilizáveis","o que um time aprende vira skill versionada dos outros — o conhecimento não morre no herói"],
+         ["Evals como gate","qualidade medida por avaliação automatizada — limiar de release, não opinião"]]
+        .map(([a,b])=>'<div class="passo-c"><b>'+a+'</b><span>'+b+'</span></div>').join("")+'</div></div>'+
         '<div class="statement">E sim — <b>temos um case de governança aplicando essa lente</b>; quem quiser ver como foi, nos encontre no intervalo.</div>';
     },
     dmbok(){
