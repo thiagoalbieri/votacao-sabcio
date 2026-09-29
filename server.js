@@ -5,7 +5,27 @@ const express = require("express");
 const { Pool } = require("pg");
 
 const app = express();
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.PGSSL === "require" ? { rejectUnauthorized: false } : undefined
+});
+
+// Bootstrap idempotente do schema — dispensa init.sql em qualquer hospedagem
+async function prepararBanco() {
+  await pool.query(`create table if not exists sessao (
+    id text primary key,
+    idx integer not null default 0,
+    estado text not null default 'aguardando',
+    atualizado_em timestamptz default now())`);
+  await pool.query(`create table if not exists votos (
+    sessao_id text not null,
+    pergunta  text not null,
+    opcao     text not null check (char_length(opcao) <= 2),
+    votante   text not null check (char_length(votante) <= 64),
+    criado_em timestamptz default now(),
+    primary key (sessao_id, pergunta, votante))`);
+}
+prepararBanco().catch(e => console.error("bootstrap do banco:", e.message));
 const SESSAO = process.env.SESSAO_ID || "sabcio2026";
 const PORTA = process.env.PORT || 8080;
 const ESTADOS = new Set(["aguardando", "aberta", "resultado"]);
