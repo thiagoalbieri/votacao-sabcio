@@ -192,7 +192,7 @@ const SLIDES = [
   { tipo:"voto", q:"p8" },
   { tipo:"foto" },
   { tipo:"sintese" },
-  { tipo:"quem" },
+  { tipo:"dmbok" },
   { tipo:"nove" },
   { tipo:"cta" }
 ];
@@ -491,15 +491,24 @@ function telaoSlide(sl){
       return '<div><p class="eyebrow">SÍNTESE · PARTE 2</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">O que a sala disse — e o que os 21% fazem diferente</h1></div>'+
         '<div class="grid3">'+C.map(([t,s,b])=>'<div class="coluna"><h3>'+t+'</h3><p class="sub">'+s+'</p><ul>'+b.map(x=>'<li>'+x+'</li>').join("")+'</ul></div>').join("")+'</div>';
     },
-    quem(){
-      const K = [["28","cases publicados, com desafio e resultado","apllos.com/cases"],
-        ["3.000+","usuários num hub de IA corporativo","indústria siderúrgica — operação 24/7"],
-        ["R$ 41 M/ano","de oportunidade mapeada em analytics de fretes","resultado publicado do case"],
-        ["3m → 2sem","ciclo de um novo caso de uso de IA","quando a esteira substitui o projeto isolado"],
-        ["5","frentes integradas","Agentes de IA · Dados · Supply · Plataformas · Experiência"],
-        ["Multicloud","AWS · Azure · Databricks · SAP","federação, não abstração"]];
-      return '<div><p class="eyebrow">QUEM ESTÁ FALANDO — EM NÚMEROS PUBLICADOS</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Por que só agora este slide: a credencial vem depois da prova</h1></div>'+
-        '<div class="grid3">'+K.map(([v,b,s])=>'<div class="kpi"><span class="valor">'+v+'</span><b>'+b+'</b><span>'+s+'</span></div>').join("")+'</div>';
+    dmbok(){
+      const A = [
+        ["Governança de Dados","política com dono, papel e regra que executa — o centro da roda","P2 · P3"],
+        ["Qualidade de Dados","eval e limiar de release: resposta piorou, release não sai","P7-C"],
+        ["Metadados & Lineage","rastrear a resposta do agente até a fonte, em minutos","P6"],
+        ["Arquitetura de Dados","plataforma governada como fundação — não planilha intermediária","P5"],
+        ["Segurança de Dados","escopo mínimo por agente; dado pessoal com prova (LGPD)","P1 · P8"],
+        ["Integração & Interop.","agente consome contrato de dado — nunca o atalho","P5 · P6"]
+      ];
+      return '<div><p class="eyebrow">O FECHAMENTO</p>'+
+        '<h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Nada do que votamos hoje é novidade — chama-se governança de dados</h1>'+
+        '<p class="muted" style="font-size:13.5px;max-width:76ch">O DAMA-DMBOK organiza essa disciplina há duas décadas. Agentes de IA não pedem um governo novo: pedem <b style="color:var(--texto)">estender o que o DMBOK já ensina</b> a decisões que agora acontecem em segundos, por software.</p></div>'+
+        '<div class="grid3">'+A.map(([a,d,p]) =>
+          '<div class="coluna" style="padding:14px"><h3 style="font-size:14px">'+a+'</h3>'+
+          '<p style="font-size:12.8px;margin:6px 0 8px">'+d+'</p>'+
+          '<span class="pill" style="font-size:10.5px">na sessão de hoje: '+p+'</span></div>').join("")+'</div>'+
+        '<div class="statement">Quem já tem o DMBOK na casa está mais perto do que imagina — falta projetá-lo sobre os agentes. <b>Nós temos um case de governança aplicando essa lente; quem quiser ver como foi, nos encontre no intervalo.</b></div>'+
+        '<p class="rodape">DAMA-DMBOK® é marca da DAMA International — usada aqui como referência de mercado, sem endosso.</p>';
     },
     nove(){
       return '<div><p class="eyebrow">PARA LEVAR PARA O COMITÊ</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Nove perguntas que testam qualquer programa — o nosso incluído</h1></div>'+
