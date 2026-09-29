@@ -105,6 +105,11 @@
   input.pin{background:var(--card2); color:var(--texto); border:1px solid var(--line); border-radius:8px; padding:12px; font:inherit; width:100%; box-sizing:border-box}
   .check{color:var(--lima); font-family:Montserrat; font-weight:800; font-size:40px}
   ol.nove{margin:0; padding-left:22px; display:flex; flex-direction:column; gap:9px; font-size:14px}
+  .glinha{display:flex; gap:10px; align-items:center; padding:5px 0; font-size:12.8px; color:var(--muted)}
+  .glinha .letra{flex:0 0 26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:var(--card2); border:1px solid var(--line); color:var(--muted); font-family:Montserrat; font-weight:800; font-size:12px}
+  .glinha.on{color:var(--texto)}
+  .glinha.on .letra{border-color:var(--lima); color:var(--lima)}
   .animGrid{display:grid; grid-template-columns:minmax(0,1fr) 330px; gap:14px}
   @media (max-width:840px){ .animGrid{grid-template-columns:1fr} }
   .cv{width:100%; height:min(54vh,500px); display:block; background:var(--card); border-radius:12px}
@@ -137,31 +142,38 @@ const PERGUNTAS = {
   p1: { rotulo:"Provocação 1 · Inventário", pergunta:"Quantos agentes de IA rodam hoje na sua empresa com acesso a dados reais?",
     opcoes:[["A","Sei o número exato — temos inventário formal"],["B","Tenho uma boa ideia — mas sem inventário"],["C","Honestamente, não sei"],["D","Ainda não temos agentes em produção"]],
     scores:{A:4,B:2,C:1,D:null}, bench:"Mercado: 82% das organizações têm agentes que a TI desconhece (Cloud Security Alliance, 04/2026).",
-    gancho:"Quem votou C: o que impede o inventário?" },
+    gancho:"Quem votou C: o que impede o inventário?",
+    ganchos:{ A:"Inclui os agentes que as áreas criaram sem a TI — e os copilots pessoais?",B:"A 'boa ideia' é onde os 82% da CSA moravam antes do primeiro incidente.",C:"Honestidade rara — o inventário é o passo 1, e leva semanas, não meses.",D:"Melhor posição da sala: quem nasce governado nunca precisa de anistia." } },
   p2: { rotulo:"Provocação 2 · Política", pergunta:"A política de IA da sua empresa hoje é o quê, na prática?",
     opcoes:[["A","Um documento — PDF, intranet, código de conduta"],["B","Um comitê que revisa caso a caso"],["C","Regras executadas por sistema — bloqueiam de fato"],["D","Ainda não temos política formal"]],
     scores:{A:2,B:3,C:4,D:1}, bench:"Mercado: só 21% têm governança madura para agentes (Deloitte, 08/2026).",
-    gancho:"Quem votou A: quando foi que o PDF bloqueou algo?" },
+    gancho:"Quem votou A: quando foi que o PDF bloqueou algo?",
+    ganchos:{ A:"Política em PDF é a norma do mercado — por isso só 21% são maduras (Deloitte).",B:"Comitê escala? Quantos casos por semana ele aguenta antes de virar fila?",C:"Vocês estão nos 21% — que sistema executa a regra? A sala quer saber.",D:"Sem política formal + agentes rodando = o perfil dos 40% do Gartner." } },
   p3: { rotulo:"Provocação 3 · Violação", pergunta:"Se um agente violar uma regra de arquitetura AGORA, o que acontece?",
     opcoes:[["A","Nada — provavelmente ninguém perceberia"],["B","Alguém percebe depois, em revisão ou incidente"],["C","Gera alerta para um time responder"],["D","É bloqueado na hora — e fica registrado"]],
     scores:{A:1,B:2,C:3,D:4}, bench:"Aviso é opinião; bloqueio é política.",
-    gancho:"Quem votou D: como isso foi construído aí?" },
+    gancho:"Quem votou D: como isso foi construído aí?",
+    ganchos:{ A:"É a diferença entre governança e sorte — 82% nem saberiam onde olhar (CSA).",B:"Perceber depois custa o preço do incidente + o da auditoria que o investiga.",C:"Alerta é meio caminho: quem responde, em quanto tempo — e o agente seguiu rodando?",D:"Bloqueio com registro é o que separa os 21% — como foi construído aí?" } },
   p4: { rotulo:"Provocação 4 · Custo", pergunta:"Quem responde pela conta de inferência de IA na sua empresa?",
     opcoes:[["A","Ninguém — o custo aparece diluído na fatura da nuvem"],["B","Medimos no agregado, sem dono por caso de uso"],["C","Custo por caso de uso, com dono nomeado"],["D","Custo por caso de uso com teto e corte automático"]],
     scores:{A:1,B:2,C:3,D:4}, bench:"Custo é a 2ª causa dos 40% que vão desligar agentes até 2027 (Gartner, 05/2026).",
-    gancho:"Quem votou A: quanto foi a fatura de IA no mês passado?" },
+    gancho:"Quem votou A: quanto foi a fatura de IA no mês passado?",
+    ganchos:{ A:"Custo invisível é a 2ª causa dos 40% que vão desligar agentes (Gartner).",B:"Agregado não sobrevive ao CFO: qual caso de uso paga a conta?",C:"Dono nomeado é o degrau que a maioria pula — falta só o teto com corte.",D:"Teto + corte automático: o CFO já descobriu que virou aliado?" } },
   p5: { rotulo:"Provocação 5 · Dados", pergunta:"Seus agentes de IA consomem dados de onde, na prática?",
     opcoes:[["A","De uma plataforma governada — catálogo, qualidade, lineage"],["B","Direto de APIs e sistemas, caso a caso"],["C","De extrações e planilhas intermediárias"],["D","Não sabemos exatamente de onde"]],
     scores:{A:4,B:2,C:1,D:1}, bench:"Agente bom em cima de dado ruim só erra mais rápido — a maturidade de IA começa na estrutura de dados.",
-    gancho:"Quem votou B ou C: quem responde quando o dado estiver errado?" },
+    gancho:"Quem votou B ou C: quem responde quando o dado estiver errado?",
+    ganchos:{ A:"Fundação dos 21% — e o catálogo cobre só tabelas, ou também modelos e agentes?",B:"API caso a caso: quem avisa o agente quando o contrato do dado mudar?",C:"Planilha intermediária = lineage quebrado logo no primeiro elo.",D:"Se ninguém sabe a origem, a resposta do agente é opinião com boa aparência." } },
   p6: { rotulo:"Provocação 6 · Lineage", pergunta:"Um agente responde errado por causa de dado ruim. Vocês descobrem a origem como?",
     opcoes:[["A","Lineage: rastreamos até a fonte em minutos"],["B","Investigação manual — leva dias"],["C","Só se alguém do negócio reclamar"],["D","Provavelmente nunca descobriríamos"]],
     scores:{A:4,B:2,C:1,D:1}, bench:"Sem rastreabilidade do dado, a resposta do agente é uma opinião com boa aparência.",
-    gancho:"Quem votou A: que ferramenta sustenta esse lineage?" },
+    gancho:"Quem votou A: que ferramenta sustenta esse lineage?",
+    ganchos:{ A:"Minutos até a fonte — a rastreabilidade que o EU AI Act exigirá do alto risco (12/2027).",B:"Dias de investigação × decisão que o agente já executou: quem chega primeiro?",C:"Descobrir pelo cliente é o caminho mais caro que existe.",D:"'Nunca descobriríamos' e a prova de tratamento da LGPD não convivem bem." } },
   p7: { rotulo:"Provocação 7 · A trava", pergunta:"O que mais trava seus agentes de chegar à produção?",
     opcoes:[["A","Segurança e compliance barram"],["B","Custo imprevisível — ninguém aprova"],["C","Qualidade: as respostas não são confiáveis"],["D","Falta esteira e método — cada piloto é artesanal"],["E","Adoção: as áreas de negócio não usam"],["F","Dados: a base não está pronta"]],
     scores:null, bench:"A trava campeã ganha os próximos minutos de conversa.",
-    gancho:"Quem quer defender a trava que escolheu?" },
+    gancho:"Quem quer defender a trava que escolheu?",
+    ganchos:{ A:"Segurança barra porque não desenhou o trilho — quem desenha o freio libera o acelerador.",B:"Custo imprevisível está na raiz dos 40% do Gartner — teto por caso de uso resolve.",C:"Qualidade sem eval automatizado é opinião contra opinião.",D:"Sem esteira, cada piloto custa o preço do primeiro — para sempre.",E:"Adoção vem de caso de uso puxado pela dor do negócio — nunca pela tecnologia.",F:"A IA não criou o problema de dados: só expôs a dívida que já existia." } },
   p8: { rotulo:"Provocação 8 · Auditoria", pergunta:"O auditor pede evidência sobre um código gerado por IA. Vocês montam em…",
     opcoes:[["A","Horas — está tudo registrado"],["B","Dias — dá trabalho, mas sai"],["C","Semanas — vira caça a prints e e-mails"],["D","Não conseguiríamos montar"]],
     scores:{A:4,B:3,C:2,D:1}, bench:"LGPD já exige prova hoje: agente também é tratamento de dados (sanção até 2% do faturamento).",
@@ -171,7 +183,8 @@ const NIVEIS = ["", "1 · Inicial", "2 · Repetível", "3 · Definido", "4 · Ge
 
 /* ═══════════ ROTEIRO SEQUENCIAL (a apresentação inteira) ═══════════ */
 const SLIDES = [
-  { tipo:"anim" },
+  { tipo:"anim",
+    ganchos:{ A:"Horas = trilha automática — vocês já estão a um passo da ISO 42001.",B:"Dias hoje; auditor e ANPD vão pedir horas amanhã.",C:"Caça a prints repete o custo a cada release — trilha imutável zera esse retrabalho.",D:"Sem prova de tratamento, a sanção LGPD chega a 2% do faturamento (teto R$ 50 mi)." } },
   { tipo:"apresentador" },
   { tipo:"recados" },
   { tipo:"mecanica" },
@@ -452,9 +465,15 @@ function telaoSlide(sl){
       const q = PERGUNTAS[sl.q];
       const { total } = contagem(sl.q);
       let corpo = "";
-      if (SES.estado === "resultado")
-        corpo = '<div class="card">'+barras(sl.q)+'<p class="bench"><b>Contraste</b> · '+esc(q.bench)+'</p></div>'+
-          '<div class="statement"><b>Depois do voto:</b> '+esc(q.gancho)+'</div>';
+      if (SES.estado === "resultado"){
+        const cc = contagem(sl.q).c;
+        const venc = Object.entries(cc).sort((a,b)=>b[1]-a[1]).filter(x=>x[1]>0).map(x=>x[0])[0];
+        const leitura = q.ganchos
+          ? '<div class="card"><p class="eyebrow" style="font-size:10px">LEITURA POR ALTERNATIVA — escolha a conversa pela distribuição</p>'+
+            q.opcoes.map(([l]) => '<div class="glinha'+(l===venc?' on':'')+'"><span class="letra">'+l+'</span><span>'+esc((q.ganchos[l]||""))+'</span></div>').join("")+'</div>'
+          : '<div class="statement"><b>Depois do voto:</b> '+esc(q.gancho)+'</div>';
+        corpo = '<div class="card">'+barras(sl.q)+'<p class="bench"><b>Contraste</b> · '+esc(q.bench)+'</p></div>'+leitura;
+      }
       else if (SES.estado === "aberta")
         corpo = '<div class="card"><p style="font-size:15px">Votos recebidos: <span class="contador">'+total+'</span></p>'+
           '<p class="muted" style="font-size:13px">O resultado aparece quando for revelado — vote sem olhar para o vizinho.</p></div>'+
