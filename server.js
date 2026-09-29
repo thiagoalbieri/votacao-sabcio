@@ -12,6 +12,16 @@ const ESTADOS = new Set(["aguardando", "aberta", "resultado"]);
 
 app.use(express.json({ limit: "2kb" }));
 
+// CORS aberto: permite que a página hospedada em outra origem (ex.: GitHub Pages)
+// consuma esta API. Dados não sensíveis (enquete anônima de evento).
+app.use((req, res, next) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+  next();
+});
+
 async function sessaoAtual() {
   const r = await pool.query("select idx, estado from sessao where id = $1", [SESSAO]);
   if (r.rows.length) return r.rows[0];
