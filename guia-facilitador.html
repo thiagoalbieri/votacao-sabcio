@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Guia do Facilitador — SAB CIO 2026</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  :root { --roxo:#7a3fa8; --lima:#5a7d00; --teal:#0e7c80; --cinza:#555; --linha:#ddd; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 10.5pt; color:#222; margin:0; line-height:1.45; }
+  h1 { font-size: 19pt; margin: 0 0 2mm; color:#111; }
+  h2 { font-size: 13pt; color: var(--roxo); border-bottom: 2px solid var(--roxo); padding-bottom: 1mm; margin: 7mm 0 3mm; }
+  h3 { font-size: 11pt; margin: 4mm 0 1.5mm; }
+  .sub { color: var(--cinza); margin: 0 0 4mm; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0; }
+  th, td { border: 1px solid var(--linha); padding: 1.6mm 2.2mm; text-align: left; vertical-align: top; font-size: 9.5pt; }
+  th { background: #f3eef8; color:#333; }
+  .num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .box { border: 1px solid var(--linha); border-left: 4px solid var(--roxo); padding: 2.5mm 3.5mm; margin: 2.5mm 0; background:#faf8fc; }
+  .box.lima { border-left-color: var(--lima); background:#f8faf0; }
+  .box.teal { border-left-color: var(--teal); background:#f0f9f9; }
+  .prov { page-break-inside: avoid; margin-bottom: 4mm; }
+  .prov h3 { color: var(--roxo); }
+  .prov .perg { font-weight: 600; margin: 0 0 1.5mm; }
+  .g { margin: 0.6mm 0; }
+  .g b { display:inline-block; width: 5mm; color: var(--roxo); }
+  .contra { color: var(--teal); font-size: 9.3pt; margin-top: 1.5mm; }
+  ul, ol { margin: 1mm 0 2mm; padding-left: 5mm; }
+  li { margin-bottom: 1mm; }
+  .duas { columns: 2; column-gap: 8mm; }
+  .quebra { page-break-before: always; }
+  .rodape { font-size: 8.5pt; color: var(--cinza); font-style: italic; }
+  code { background:#f1f1f1; padding: 0 1mm; font-size: 9pt; }
+  .chk li { list-style: none; }
+  .chk li::before { content: "☐ "; color: var(--roxo); }
+</style>
+</head>
+<body>
+
+<h1>Guia do Facilitador — Connect Session Apllos</h1>
+<p class="sub">SAB CIO 2026 (EBDI) · 7–9/out/2026 · Casa Grande Hotel, Guarujá · 30 minutos · Facilitador: Thiago Albieri (Sócio · Dados &amp; IA)<br>
+Tese: <b>governança é A falha na implementação de agentes</b> — a sala vota, o resultado guia a conversa, o fechamento é DAMA-DMBOK.</p>
+
+<h2>1 · Logística e controles (decorar)</h2>
+<table>
+<tr><th>Item</th><th>Como</th></tr>
+<tr><td>Telão</td><td>URL da página + <code>#telao</code> → PIN do facilitador. Manter notebook com carregador; a tela não dorme (wake lock).</td></tr>
+<tr><td>Navegar</td><td>Setas <b>← →</b> do teclado (ou botões). <b>Enter</b> = abre a votação / revela o resultado no slide de provocação.</td></tr>
+<tr><td>Participante</td><td>Só a URL do QR (aparece sozinho nos passos de votação e na abertura). O celular deles mostra "aguarde" e acorda quando você abre a votação. Nunca vê parcial.</td></tr>
+<tr><td>Subir o stack</td><td><code>DB_SENHA=... docker compose up -d --build</code> na pasta do repositório → porta 8080 → expor com HTTPS (reverse proxy).</td></tr>
+<tr><td>Se a internet cair</td><td>Banner "MODO DEMO" aparece no telão. <b>Plano B: braço levantado por opção (A/B/C/D)</b> — a dinâmica continua idêntica. O slide da dinâmica já preparou a sala para isso.</td></tr>
+<tr><td>Zerar votos</td><td>Botão no telão — usar ANTES da sessão (limpa testes). Nunca durante.</td></tr>
+</table>
+
+<h2>2 · O arco em 19 passos (30 min)</h2>
+<table>
+<tr><th class="num">Min</th><th>Passo</th><th>Condução</th></tr>
+<tr><td class="num">0–1,5</td><td>1 · Connect Session (dinâmica)</td><td>QR no ar desde o primeiro segundo: "escaneiem enquanto conversamos". Regra da casa: não existe resposta errada, existe fotografia honesta — voto anônimo.</td></tr>
+<tr><td class="num">1,5–2</td><td>2 · Apresentação</td><td>30–45s. Engenharia USP + MBA Int. de Dados + sócio Apllos. Postura: executivo entre tecnologia e negócio — nunca "desenvolvedor".</td></tr>
+<tr><td class="num">2–4</td><td>3 · Agentes (animação)</td><td>Deixar 1 loop rodar (~30s) em silêncio parcial; narrar por cima do log. Fechar apontando a última linha: "decisão rastreável de ponta a ponta". Rodapé diz que é simulação — não esconder.</td></tr>
+<tr><td class="num">4–6</td><td>4 · A provocação (3 recados)</td><td>"O enxame funciona. Quem governa?" Ler POR COLUNA: fracasso já começou · guardrail não governa a empresa · o controle já é cobrado (LGPD). Pausar no 82%.</td></tr>
+<tr><td class="num">6–7</td><td>5 · Aquecimento</td><td>"De que setor você vem?" — só para destravar polegares. Comemorar o contador subindo.</td></tr>
+<tr><td class="num">7–25</td><td>6–14 · P1 a P9</td><td>Ritmo: ~45s de voto + ~90s de conversa por provocação (2min cada). <b>Cortáveis se estourar: P3, P6 e P8</b> (nessa ordem). A P7 (trava) e a P9 (modelo) são as que mais geram fala — reservar fôlego.</td></tr>
+<tr><td class="num">25–26,5</td><td>15 · Fotografia (radar)</td><td>Deixar a sala LER o radar em silêncio por 5s. Usar a "Leitura da sala" automática (ver seção 4). Apontar o vale do polígono.</td></tr>
+<tr><td class="num">26,5–27,5</td><td>16 · DMBOK</td><td>"Nada disso é novidade — chama-se governança de dados." Elogio à fundação que muitos já têm; falta projetá-la sobre agentes.</td></tr>
+<tr><td class="num">27,5–28,5</td><td>17 · Síntese (4 pilares)</td><td>Amarrar cada pilar a um resultado REAL votado. O case da Apllos é a ÚLTIMA frase — uma linha, tom humilde.</td></tr>
+<tr><td class="num">28,5–29,5</td><td>18 · Nove perguntas</td><td>"Valem para qualquer fornecedor — nós incluídos." Avisar que o material cai no celular no próximo passo.</td></tr>
+<tr><td class="num">29,5–30</td><td>19 · CTA</td><td>Ao avançar, o celular de todos recebe as nove perguntas + números com fonte: "tirem um print — é seu". Encerrar NO tempo.</td></tr>
+</table>
+
+<div class="quebra"></div>
+<h2>3 · As provocações — leitura por alternativa (cola de condução)</h2>
+<p class="sub">O telão mostra estas leituras ao revelar; a vencedora fica destacada. Use a linha da alternativa mais votada e UMA minoritária interessante.</p>
+
+<div class="prov"><h3>P1 · Inventário</h3><p class="perg">Quantos agentes de IA rodam hoje na sua empresa com acesso a dados reais?</p>
+<div class="g"><b>A</b> Sei o número exato → inclui os agentes que as áreas criaram sem a TI — e os copilots pessoais?</div>
+<div class="g"><b>B</b> Boa ideia, sem inventário → a "boa ideia" é onde os 82% da CSA moravam antes do primeiro incidente.</div>
+<div class="g"><b>C</b> Não sei → honestidade rara; o inventário é o passo 1 e leva semanas, não meses.</div>
+<div class="g"><b>D</b> Sem agentes → melhor posição da sala: quem nasce governado nunca precisa de anistia.</div>
+<p class="contra">Contraste: CSA 04/2026 — 82% têm agentes que a TI desconhece.</p></div>
+
+<div class="prov"><h3>P2 · Política</h3><p class="perg">A política de IA da sua empresa hoje é o quê, na prática?</p>
+<div class="g"><b>A</b> PDF → é a norma do mercado — por isso só 21% são maduras (Deloitte).</div>
+<div class="g"><b>B</b> Comitê → escala? Quantos casos por semana antes de virar fila?</div>
+<div class="g"><b>C</b> Sistema que bloqueia → vocês estão nos 21% — que sistema executa? A sala quer saber. <i>(puxar ao microfone!)</i></div>
+<div class="g"><b>D</b> Sem política → sem política + agentes rodando = o perfil dos 40% do Gartner.</div>
+<p class="contra">Contraste: Deloitte 08/2026 — 21% maduras; 74% planejam em 2 anos.</p></div>
+
+<div class="prov"><h3>P3 · Violação <span class="rodape">(cortável)</span></h3><p class="perg">Se um agente violar uma regra de arquitetura AGORA, o que acontece?</p>
+<div class="g"><b>A</b> Nada → a diferença entre governança e sorte — 82% nem saberiam onde olhar.</div>
+<div class="g"><b>B</b> Percebe depois → custa o preço do incidente + o da auditoria que o investiga.</div>
+<div class="g"><b>C</b> Alerta → meio caminho: quem responde, em quanto tempo — e o agente seguiu rodando?</div>
+<div class="g"><b>D</b> Bloqueado e registrado → o que separa os 21% — como foi construído aí? <i>(puxar!)</i></div>
+<p class="contra">Frase-âncora: aviso é opinião; bloqueio é política.</p></div>
+
+<div class="prov"><h3>P4 · Custo</h3><p class="perg">Quem responde pela conta de inferência de IA na sua empresa?</p>
+<div class="g"><b>A</b> Ninguém → custo invisível é a 2ª causa dos 40% que vão desligar agentes (Gartner).</div>
+<div class="g"><b>B</b> Agregado → não sobrevive ao CFO: qual caso de uso paga a conta?</div>
+<div class="g"><b>C</b> Por caso de uso, com dono → o degrau que a maioria pula — falta só o teto com corte.</div>
+<div class="g"><b>D</b> Teto + corte → o CFO já descobriu que virou aliado?</div></div>
+
+<div class="prov"><h3>P5 · Dados (fonte)</h3><p class="perg">Seus agentes de IA consomem dados de onde, na prática?</p>
+<div class="g"><b>A</b> Plataforma governada → fundação dos 21% — o catálogo cobre só tabelas, ou também modelos e agentes?</div>
+<div class="g"><b>B</b> APIs caso a caso → quem avisa o agente quando o contrato do dado mudar?</div>
+<div class="g"><b>C</b> Planilhas → lineage quebrado logo no primeiro elo.</div>
+<div class="g"><b>D</b> Não sabemos → se ninguém sabe a origem, a resposta do agente é opinião com boa aparência.</div>
+<p class="contra">Frase: agente bom em cima de dado ruim só erra mais rápido.</p></div>
+
+<div class="prov"><h3>P6 · Lineage <span class="rodape">(cortável)</span></h3><p class="perg">Um agente responde errado por dado ruim. Vocês descobrem a origem como?</p>
+<div class="g"><b>A</b> Minutos → a rastreabilidade que o EU AI Act exigirá do alto risco (12/2027). Que ferramenta sustenta?</div>
+<div class="g"><b>B</b> Dias → investigação de dias × decisão que o agente já executou: quem chega primeiro?</div>
+<div class="g"><b>C</b> Se reclamarem → descobrir pelo cliente é o caminho mais caro que existe.</div>
+<div class="g"><b>D</b> Nunca → "nunca descobriríamos" e a prova de tratamento da LGPD não convivem bem.</div></div>
+
+<div class="prov"><h3>P7 · A trava (6 opções — a mais rica em histórias)</h3><p class="perg">O que mais trava seus agentes de chegar à produção?</p>
+<div class="g"><b>A</b> Segurança → quem desenha o freio libera o acelerador.</div>
+<div class="g"><b>B</b> Custo → raiz dos 40% do Gartner; teto por caso de uso resolve.</div>
+<div class="g"><b>C</b> Qualidade → sem eval automatizado é opinião contra opinião.</div>
+<div class="g"><b>D</b> Sem esteira → cada piloto custa o preço do primeiro — para sempre.</div>
+<div class="g"><b>E</b> Adoção → caso de uso puxado pela dor do negócio, nunca pela tecnologia.</div>
+<div class="g"><b>F</b> Dados → a IA não criou o problema: só expôs a dívida que já existia.</div>
+<p class="contra">A trava campeã ganha 3–4 min de conversa — é o coração da sessão.</p></div>
+
+<div class="prov"><h3>P8 · Auditoria <span class="rodape">(cortável)</span></h3><p class="perg">O auditor pede evidência sobre uma decisão executada por um agente de IA. Vocês montam em…</p>
+<div class="g"><b>A</b> Horas → trilha automática — a um passo da ISO 42001.</div>
+<div class="g"><b>B</b> Dias → hoje; auditor e ANPD vão pedir horas amanhã.</div>
+<div class="g"><b>C</b> Semanas → caça a prints repete o custo a cada auditoria.</div>
+<div class="g"><b>D</b> Não conseguiríamos → sem prova de tratamento, sanção LGPD até 2% do faturamento (teto R$ 50 mi).</div></div>
+
+<div class="prov"><h3>P9 · Modelo de governo (fecha o bloco)</h3><p class="perg">Quem governa a IA na sua organização hoje?</p>
+<div class="g"><b>A</b> Central (comitê/CoE) → escala? Quantos casos por semana antes de virar a fila que todos contornam? <i>(puxar quem defende!)</i></div>
+<div class="g"><b>B</b> Cada área → descentralização sem regra comum é como nascem os 82% de shadow agents.</div>
+<div class="g"><b>C</b> Híbrido → o consenso dos analistas: centralize o FREIO, descentralize a DIREÇÃO — quem já faz data mesh está a um passo.</div>
+<div class="g"><b>D</b> Ninguém → sem dono, a governança acontece do mesmo jeito — só que pelo incidente.</div>
+<p class="contra">Ponte com a plateia de dados: é a "federated computational governance" do data mesh chegando à IA.</p></div>
+
+<div class="quebra"></div>
+<h2>4 · Leitura da sala (o telão calcula sozinho — sua fala por faixa)</h2>
+<div class="box"><b>Índice &lt; 2,0:</b> "A sala está onde o mercado está — o terreno dos 40% do Gartner. A boa notícia: o caminho não é misterioso, é disciplina conhecida — próximos dois quadros."</div>
+<div class="box"><b>2,0–2,9:</b> "Meio do caminho: as fundações existem; o vão está em transformar intenção em regra que executa. É o degrau que separa os 74% que planejam dos 21% que provam."</div>
+<div class="box lima"><b>≥ 3,0 (o cenário que preocupa — vira teste, não lição):</b> "Autoavaliação acima do mercado — Deloitte mediu 21% maduras e 74% ACHAM que estarão prontas em 2 anos. Ou esta sala é a elite, ou fomos generosos. O teste honesto são as nove perguntas: quem as responder com evidência no comitê é, de fato, os 21% — e adoraríamos conhecer o case de VOCÊS." O DMBOK vira elogio: "nota alta aqui quase sempre é fundação de dados bem-feita — falta projetá-la sobre os agentes; foi esse o salto do nosso case."</div>
+
+<h2>5 · Q&amp;A antecipado (respostas de 15 segundos)</h2>
+<ul>
+<li><b>"Copilot/Bedrock/Vertex já não fazem isso?"</b> — Guardrail de modelo, sim; ciclo de decisão governado ponta a ponta (regra → gate humano → custo → prova), não. E nenhum nativo enxerga a nuvem do vizinho — por isso federação.</li>
+<li><b>"Esse produto de vocês existe? Posso ver?"</b> — "É o acelerador que estamos construindo sobre o método que já operamos em cliente. O que está em produção é o trilho — o case. A sessão de desenho no seu contexto mostra como aterrissa aí."</li>
+<li><b>"Isso não engessa o time?"</b> — O bloqueio acontece onde a empresa já dizia "não" em PDF. Agora o "não" é imediato, explicável e tem via de exceção com dono e prazo.</li>
+<li><b>"E quando a regra está errada?"</b> — Regra que acumula exceções denuncia a si mesma. Governança de regras também é governada.</li>
+<li><b>"Quanto tempo até valor?"</b> — Primeiro caso de uso governado em semanas; a régua completa sai de assessment curto.</li>
+<li><b>"Vocês confiam em IA decidindo?"</b> — Não confiamos: verificamos. Bloqueio, gate humano e prova no lugar de fé.</li>
+<li><b>"Central ou descentralizado?"</b> — Nem um nem outro: federado. Centralize política, plataforma e observabilidade; descentralize a execução nos domínios — como o data mesh já ensinou.</li>
+</ul>
+
+<h2>6 · Os números da sessão (falar SEMPRE com fonte e data)</h2>
+<table>
+<tr><th>Número</th><th>O que é</th><th>Fonte</th></tr>
+<tr><td class="num">40%</td><td>empresas que vão desligar/rebaixar agentes até 2027 (governança + custo)</td><td>Gartner, 05/2026</td></tr>
+<tr><td class="num">82%</td><td>têm agentes que a própria TI desconhece (shadow agents)</td><td>Cloud Security Alliance, 04/2026</td></tr>
+<tr><td class="num">21% / 74%</td><td>governança madura hoje / acham que terão em 2 anos</td><td>Deloitte, 08/2026</td></tr>
+<tr><td class="num">3</td><td>fabricantes de guardrails comprados em 12 meses (Portkey→PANW, Lakera→Check Point, Protect AI→PANW) — guardrail virou commodity</td><td>anúncios públicos</td></tr>
+<tr><td class="num">0</td><td>ferramentas nativas que executam a política da SUA empresa entre nuvens</td><td>análise Apllos (Cedar × Entra × Model Armor × Unity Catalog)</td></tr>
+<tr><td class="num">2% / R$ 50 mi</td><td>sanção LGPD por infração — agente também é tratamento de dados</td><td>LGPD / ANPD</td></tr>
+<tr><td class="num">12/2027</td><td>obrigações de alto risco do EU AI Act (rastreabilidade incluída)</td><td>EU AI Act</td></tr>
+<tr><td class="num">—</td><td>ISO/IEC 42001: sistema de gestão de IA, já certificável</td><td>ISO</td></tr>
+</table>
+
+<h2>7 · Regras de conduta (inegociáveis)</h2>
+<ul>
+<li>Nomes de clientes SÓ em conversa privada — no palco: setores ("indústria siderúrgica", como o site publica).</li>
+<li>Métricas próprias faladas = somente as publicadas em apllos.com/cases.</li>
+<li>Nunca prometer percentual de ganho; nunca "somos os únicos"; simulações sempre anunciadas como simulações.</li>
+<li>Nunca corrigir um voto — "fotografia honesta". Contrastar com dado de mercado, não julgar.</li>
+<li>DAMA-DMBOK® é marca da DAMA International — referência de mercado, sem endosso.</li>
+</ul>
+
+<h2>8 · Checklist pré-evento</h2>
+<ul class="chk">
+<li>Stack no ar com HTTPS num subdomínio próprio; testado em 3+ celulares (4G e Wi-Fi).</li>
+<li>Trocar o PIN do telão; ZERAR os votos de teste antes de entrar no palco.</li>
+<li>Ensaiar 1× com cronômetro simulando conversas de 90s (alvo: P9 termina no min 25).</li>
+<li>Notebook: carregador, brilho máximo, notificações off, aba #telao logada com PIN.</li>
+<li>4G/5G próprio como rede de contingência do notebook.</li>
+<li>Decidir na véspera: cortar P3/P6/P8 conforme o tamanho da sala e o apetite de conversa.</li>
+<li>Foto do palestrante no slide 2 (opcional): foto-palestrante.png na pasta + rebuild.</li>
+</ul>
+
+<p class="rodape">Gerado em 28/09/2026 a partir do repositório da sessão (votacao/). Regerar o PDF: editar guia-facilitador.html e rodar o comando do README.</p>
+
+</body>
+</html>

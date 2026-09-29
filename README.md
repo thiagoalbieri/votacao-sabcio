@@ -11,6 +11,7 @@ A apresentação oficial da sessão é ESTA página web (os PPTX da pasta acima 
 | `index.html` | **A página pronta para hospedar** (documento completo). |
 | `app.html` | O mesmo conteúdo em formato de fragmento — fonte da demo publicada no claude.ai. Editar os dois juntos (ou editar `app.html` e regerar `index.html` com o wrapper). |
 | `build.py` | Regera `index.html` a partir de `app.html` (wrapper standalone). |
+| `guia-facilitador.html` + `Guia do Facilitador - SAB CIO 2026.pdf` | Cola de condução: arco 19 passos, leituras por alternativa, faixas de maturidade, Q&A, números com fonte, checklist. Regerar o PDF: `msedge --headless --no-pdf-header-footer --print-to-pdf="Guia....pdf" file:///.../guia-facilitador.html`. |
 | `server.js` + `package.json` | API mínima (Express + pg): sessão, votos, upsert — e serve a própria página. |
 | `Dockerfile` + `docker-compose.yml` | Stack completo: Postgres 16 + app na porta 8080. |
 | `db/init.sql` | Schema do banco — roda sozinho no primeiro start do Postgres. |
