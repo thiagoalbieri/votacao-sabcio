@@ -302,6 +302,16 @@ function fotografia(compacta){
       (iAg != null ? '<span class="pill on">Agentes & governança: '+iAg.toFixed(1)+'</span>' : '')+
       (iDa != null ? '<span class="pill" style="border-color:var(--teal);color:var(--teal)">Estrutura de dados: '+iDa.toFixed(1)+'</span>' : '')+
       '</div></div></div>';
+  if (!compacta && geral != null){
+    let li;
+    if (geral < 2.0)
+      li = ["A sala está onde o mercado está", "— e é exatamente este o terreno dos 40% do Gartner. A boa notícia: o caminho não é misterioso, é disciplina conhecida (próximos dois quadros)."];
+    else if (geral < 3.0)
+      li = ["Meio do caminho", "— as fundações existem; o vão está em transformar intenção em regra que executa. É o degrau que separa os 74% que planejam dos 21% que provam (Deloitte)."];
+    else
+      li = ["Autoavaliação acima do mercado", "— a Deloitte mediu 21% de governança madura, e 74% ACHAM que estarão prontas em 2 anos. Ou esta sala é a elite, ou fomos generosos conosco. O teste honesto são as nove perguntas do final: quem as responder com evidência no comitê é, de fato, os 21%."];
+    html += '<div class="statement"><b>Leitura da sala: '+li[0]+'</b> '+li[1]+'</div>';
+  }
   if (!compacta) html += minisFoto();
   return html || '<div class="card"><p class="muted">Ainda sem votos suficientes.</p></div>';
 }

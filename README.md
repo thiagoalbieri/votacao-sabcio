@@ -28,6 +28,13 @@ A apresentação oficial da sessão é ESTA página web (os PPTX da pasta acima 
 - **Aquecimento:** o passo 5 (setor de origem) testa o QR com a sala logo depois da mecânica.
 - **Sem config / ensaio:** sem as chaves do Supabase a página roda em **MODO DEMO** (banner avisa): votos ficam no navegador, com botão "Simular 25 votos" no telão — perfeito para ensaiar sozinho (aba normal = participante, aba `#telao` = facilitador).
 
+## Se a sala votar maturidade ALTA (o fechamento não depende de nota baixa)
+A fotografia mostra uma **leitura automática** conforme o índice (baixa / média / alta). Para o caso alto, o pivô de condução:
+1. **Percepção × evidência:** "Deloitte: 21% maduras de fato, 74% acham que estarão em 2 anos — em qual metade está cada resposta?" (a leitura automática já diz isso no telão).
+2. **As nove perguntas viram teste, não lição:** "levem ao comitê; se as respostas sustentarem o radar, vocês SÃO os 21% — e adoraríamos conhecer o case de vocês." (humildade que gera credibilidade).
+3. **O DMBOK vira elogio:** "nota alta aqui quase sempre significa fundação de dados bem-feita — o convite é projetá-la sobre os agentes; foi exatamente esse salto que fizemos no nosso case."
+Nada disso exige mudar slide: os três pivôs usam o que já está no ar. As opções de voto são ancoradas em comportamento ("sei o número exato", "bloqueiam de fato") justamente para conter inflação de autoavaliação.
+
 ## Limites assumidos (honestos)
 - **Anonimato real:** nenhum dado pessoal é coletado; o "1 voto por pessoa" usa um id aleatório no navegador — quem limpar o navegador consegue votar de novo. Para enquete de sala, é o padrão do mercado (Slido faz igual no modo anônimo).
 - **Segurança:** a API é aberta por design (enquete anônima de evento, dados não sensíveis, sessão de 30 min): quem tiver a URL consegue, tecnicamente, votar mais de uma vez ou mexer no estado. O PIN do telão é trava de conveniência (vive no front). Não reutilizar este stack para nada além da enquete; derrubar o container após o evento (`docker compose down -v`).
