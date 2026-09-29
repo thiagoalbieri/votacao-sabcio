@@ -210,9 +210,10 @@ const SLIDES = [
   { tipo:"custo" },
   { tipo:"nove" },
   { tipo:"cta" },
-  { tipo:"imagem", titulo:"Dentro de um agente: harness, guardrails, memória e o loop de decisão",
+  { tipo:"imagem", titulo:"Um agente governável é um agente em camadas",
+    sub:"O modelo — o 'cérebro' que todo mundo discute — é UMA caixa neste desenho. Instruções, skills, guardrails, memória, orquestração e ferramentas são camadas definidas por engenharia, cada uma com dono e regra. Quem não define camadas entrega o controle ao modelo; quem define troca o modelo amanhã sem refazer o sistema.",
     src:"arquitetura-agente.png",
-    rodape:"Apêndice técnico — diagrama de referência da arquitetura de um agente com modelo generativo." }
+    rodape:"Apêndice técnico — arquitetura de referência de um agente com modelo generativo. A governança mora nas camadas, não no modelo." }
 ];
 const NOVE = [
   "Quantos agentes rodam hoje com acesso a dados de produção — e quem responde por cada um?",
@@ -497,10 +498,11 @@ function telaoSlide(sl){
     },
     imagem(){
       const volta = 3; // cenário
-      return '<div><p class="eyebrow">APÊNDICE · SE A CONVERSA APROFUNDAR</p>'+
-        '<h1 class="q" style="font-size:clamp(18px,2.4vw,28px)">'+esc(sl.titulo)+'</h1></div>'+
+      return '<div><p class="eyebrow">APÊNDICE · A NECESSIDADE DE DEFINIR CAMADAS</p>'+
+        '<h1 class="q" style="font-size:clamp(18px,2.4vw,28px)">'+esc(sl.titulo)+'</h1>'+
+        (sl.sub ? '<p class="muted" style="font-size:12.5px;max-width:88ch;margin:4px 0 0">'+esc(sl.sub)+'</p>' : '')+'</div>'+
         '<div class="card" style="padding:10px;display:flex;justify-content:center">'+
-        '<img src="'+sl.src+'" alt="" style="max-width:100%;max-height:64vh;border-radius:8px;object-fit:contain"></div>'+
+        '<img src="'+sl.src+'" alt="" style="max-width:100%;max-height:58vh;border-radius:8px;object-fit:contain"></div>'+
         '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">'+
         '<p class="rodape" style="margin:0">'+esc(sl.rodape)+'</p>'+
         '<button class="btn ghost" data-goto="'+volta+'">← Voltar ao cenário</button></div>';
