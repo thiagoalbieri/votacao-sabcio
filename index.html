@@ -223,7 +223,6 @@ const SLIDES = [
   { tipo:"voto", q:"p9" },
   { tipo:"foto" },
   { tipo:"dmbok" },
-  { tipo:"sintese" },
   { tipo:"iafirst" },
   { tipo:"custo" },
   { tipo:"nove" },
@@ -664,8 +663,8 @@ function telaoSlide(sl){
       const linha = (rot, its) => '<div><p class="grupoT" style="margin:2px 0 8px">'+rot+'</p>'+
         '<div class="passos" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">'+
         its.map(([a,b])=>'<div class="passo-c"><b>'+a+'</b><span>'+b+'</span></div>').join("")+'</div></div>';
-      return '<div><p class="eyebrow">SÍNTESE · O CAMINHO</p>'+
-        '<h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Chegar a IA-first é um programa — não uma compra</h1>'+
+      return '<div><p class="eyebrow">SÍNTESE · CHEGAR A IA-FIRST É UM PROGRAMA, NÃO UMA COMPRA</p>'+
+        '<h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">O que a sala disse — e o que os 21% fazem diferente</h1>'+
         '<p class="muted" style="font-size:12.5px;max-width:80ch">Duas trilhas que andam juntas: a engenharia que governa os agentes e a organização que os absorve. Quem toca só uma delas fica no piloto eterno.</p></div>'+
         linha("TRILHA DE ENGENHARIA", ENG)+
         linha("TRILHA DA ORGANIZAÇÃO", ORG)+
