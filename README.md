@@ -16,6 +16,14 @@ A apresentação oficial da sessão é ESTA página web (os PPTX da pasta acima 
 | `Dockerfile` + `docker-compose.yml` | Stack completo: Postgres 16 + app na porta 8080. |
 | `db/init.sql` | Schema do banco — roda sozinho no primeiro start do Postgres. |
 
+## Onde está no ar (produção)
+| O quê | URL |
+|---|---|
+| **Aplicação completa (Railway: app + Postgres gerenciado)** | https://app-production-5c10.up.railway.app — telão: `#telao` |
+| Vitrine no GitHub Pages (usa a API da Railway via `CONFIG.API_REMOTA`) | https://thiagoalbieri.github.io/votacao-sabcio/ |
+
+Redeploy após mudanças: `python build.py` → commit → `railway up --service app --detach` (nesta pasta, projeto `votacao-sabcio`). O schema do banco é criado pelo próprio servidor no boot (idempotente). Se o backend mudar de endereço, atualizar `CONFIG.API_REMOTA` em `app.html` para o Pages acompanhar.
+
 ## Como colocar no ar (Docker)
 1. Nesta pasta: `DB_SENHA=uma-senha-forte docker compose up -d --build` (Windows PowerShell: `$env:DB_SENHA="uma-senha-forte"; docker compose up -d --build`).
 2. Página no ar em `http://localhost:8080` — o schema do banco sobe sozinho no primeiro start.
