@@ -112,14 +112,13 @@
 <div id="app"><div class="wrap"><div class="card"><p class="muted">Carregando a sessão…</p></div></div></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 "use strict";
-/* ═══════════ CONFIG — preencher para o evento (vazio = MODO DEMO) ═══════════ */
+/* ═══════════ CONFIG ═══════════
+   Backend = container Docker desta pasta (Postgres + API), que também serve esta página.
+   API vazia = mesma origem. Se a API não responder, a página cai sozinha em MODO DEMO. */
 const CONFIG = {
-  SUPABASE_URL: "",        // ex.: https://abcdxyz.supabase.co
-  SUPABASE_ANON_KEY: "",   // chave "anon public" do projeto
-  SESSAO: "sabcio2026",
+  API: "",
   PIN_TELAO: "apllos2026"
 };
 
@@ -195,15 +194,16 @@ const NOVE = [
   "Qualidade de resposta é medida por eval automatizado ou por opinião?",
   "Se trocarmos de fornecedor de IA amanhã, o histórico e as regras vêm conosco?"
 ];
-const DEMO = !CONFIG.SUPABASE_URL;
-
-/* ═══════════ armazenamento: Supabase ou demo local ═══════════ */
-let sb = null;
-if (!DEMO) sb = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+/* ═══════════ armazenamento: API do container ou demo local ═══════════ */
+let DEMO = true;      // vira false quando a API do backend responde
+let sondado = false;  // a sonda roda uma vez, no primeiro refresh
 const lsGet = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} };
+const api = (caminho, opts) => fetch(CONFIG.API + caminho, Object.assign(
+  { cache:"no-store", headers:{ "Content-Type":"application/json" } }, opts))
+  .then(r => { if (!r.ok) throw new Error("api " + r.status); return r.json(); });
 
-const store = DEMO ? {
+const local = {
   async getSessao(){ return lsGet("vs_sessao", { idx:0, estado:"aguardando" }); },
   async setSessao(p){ const s = Object.assign(await this.getSessao(), p); lsSet("vs_sessao", s); return s; },
   async addVoto(pergunta, opcao, votante){
@@ -214,25 +214,21 @@ const store = DEMO ? {
   },
   async getVotos(){ return lsGet("vs_votos", []); },
   async limpar(){ lsSet("vs_votos", []); }
-} : {
-  async getSessao(){
-    const { data } = await sb.from("sessao").select("idx,estado").eq("id", CONFIG.SESSAO).single();
-    return data || { idx:0, estado:"aguardando" };
-  },
-  async setSessao(p){
-    await sb.from("sessao").update(Object.assign({}, p, { atualizado_em:new Date().toISOString() })).eq("id", CONFIG.SESSAO);
-  },
-  async addVoto(pergunta, opcao, votante){
-    await sb.from("votos").upsert(
-      { sessao_id:CONFIG.SESSAO, pergunta, opcao, votante },
-      { onConflict:"sessao_id,pergunta,votante" });
-  },
-  async getVotos(){
-    const { data } = await sb.from("votos").select("pergunta,opcao").eq("sessao_id", CONFIG.SESSAO);
-    return data || [];
-  },
-  async limpar(){ await sb.from("votos").delete().eq("sessao_id", CONFIG.SESSAO); }
 };
+const remoto = {
+  getSessao: () => api("/api/sessao"),
+  setSessao: p => api("/api/sessao", { method:"PUT", body:JSON.stringify(p) }),
+  addVoto: (pergunta, opcao, votante) => api("/api/voto", { method:"POST", body:JSON.stringify({ pergunta, opcao, votante }) }),
+  getVotos: () => api("/api/votos"),
+  limpar: () => api("/api/votos", { method:"DELETE" })
+};
+const via = n => (...a) => (DEMO ? local : remoto)[n](...a);
+const store = { getSessao:via("getSessao"), setSessao:via("setSessao"),
+                addVoto:via("addVoto"), getVotos:via("getVotos"), limpar:via("limpar") };
+async function sondarAPI(){
+  try { await remoto.getSessao(); DEMO = false; } catch(e){ DEMO = true; }
+  sondado = true;
+}
 
 /* ═══════════ identidade anônima ═══════════ */
 let VOTANTE = lsGet("vs_id", null);
@@ -534,7 +530,7 @@ function vistaVotante(){
   const sl = slideAtual();
   app.innerHTML = '<div class="wrap">'+
     '<div class="headline"><span class="logo">Apllos<b>.</b></span><span class="pill">SAB CIO 2026 · voto anônimo</span></div>'+
-    (DEMO ? '<div class="aviso"><b>MODO DEMO</b> — sem banco: os votos ficam só neste navegador.</div>' : "")+
+    (DEMO ? '<div class="aviso"><b>MODO DEMO</b> — backend fora do ar: os votos ficam só neste navegador.</div>' : "")+
     foneSlide(sl)+'</div>';
   app.querySelectorAll(".opt[data-op]").forEach(b => b.addEventListener("click", async () => {
     const qid = b.dataset.q, op = b.dataset.op;
@@ -570,7 +566,7 @@ function vistaTelao(){
   app.innerHTML = '<div class="telaoWrap">'+
     '<div class="headline"><span class="logo" style="font-size:18px">Apllos<b>.</b></span>'+
     '<span class="pill">SAB CIO 2026 · governança de IA agêntica</span></div>'+
-    (DEMO ? '<div class="aviso"><b>MODO DEMO</b> — votos simulados neste navegador. Outra aba sem #telao = participante.</div>' : "")+
+    (DEMO ? '<div class="aviso"><b>MODO DEMO</b> — backend fora do ar: votos simulados neste navegador. Outra aba sem #telao = participante.</div>' : "")+
     (mostraQR ? '<div class="grade">'+palco+'<div>'+lateral+'</div></div>' : palco)+
     '<div class="controles">'+
     '<button class="btn ghost" id="ant">←</button>'+
@@ -615,6 +611,7 @@ window.addEventListener("keydown", async e => {
 /* ═══════════ loop de sincronização ═══════════ */
 function render(){ TELAO ? vistaTelao() : vistaVotante(); }
 async function refresh(){
+  if (!sondado) await sondarAPI();
   try {
     SES = await store.getSessao();
     VOTOS = await store.getVotos();
