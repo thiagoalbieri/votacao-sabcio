@@ -209,7 +209,10 @@ const SLIDES = [
   { tipo:"sintese" },
   { tipo:"custo" },
   { tipo:"nove" },
-  { tipo:"cta" }
+  { tipo:"cta" },
+  { tipo:"imagem", titulo:"Dentro de um agente: harness, guardrails, memória e o loop de decisão",
+    src:"arquitetura-agente.png",
+    rodape:"Apêndice técnico — diagrama de referência da arquitetura de um agente com modelo generativo." }
 ];
 const NOVE = [
   "Quantos agentes rodam hoje com acesso a dados de produção — e quem responde por cada um?",
@@ -492,6 +495,16 @@ function telaoSlide(sl){
         '<div class="animGrid"><canvas class="cv" id="cv"></canvas><div class="logp" id="animlog"></div></div>'+
         '<p class="rodape">Simulação ilustrativa — números fictícios. O padrão (agentes especialistas + orquestração + gate humano) é o mesmo dos projetos publicados em apllos.com/cases.</p>';
     },
+    imagem(){
+      const volta = 3; // cenário
+      return '<div><p class="eyebrow">APÊNDICE · SE A CONVERSA APROFUNDAR</p>'+
+        '<h1 class="q" style="font-size:clamp(18px,2.4vw,28px)">'+esc(sl.titulo)+'</h1></div>'+
+        '<div class="card" style="padding:10px;display:flex;justify-content:center">'+
+        '<img src="'+sl.src+'" alt="" style="max-width:100%;max-height:64vh;border-radius:8px;object-fit:contain"></div>'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">'+
+        '<p class="rodape" style="margin:0">'+esc(sl.rodape)+'</p>'+
+        '<button class="btn ghost" data-goto="'+volta+'">← Voltar ao cenário</button></div>';
+    },
     capa(){
       return '<div style="margin-block:auto"><p class="eyebrow">SAB CIO 2026 · SESSÃO APLLOS · 30 MIN</p>'+
         '<h1 class="titulo1">IA agêntica em produção</h1><h2 class="titulo2">com freio e com prova</h2>'+
@@ -534,7 +547,8 @@ function telaoSlide(sl){
       return '<div><p class="eyebrow">A PROVOCAÇÃO · QUEM GOVERNA O QUE VOCÊS ACABARAM DE VER?</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">O que falta não é tecnologia — é governança</h1><p class="muted" style="font-size:13.5px;max-width:80ch">E governança aqui NÃO é escolher o modelo certo e congelar a decisão — a inovação da área não para, e definição rígida de modelo ou ferramenta nasce obsoleta. Governar as invariantes (escopo, gate humano, custo, prova) é o que permite <b style="color:var(--texto)">trocar de peça sem perder o controle</b>.</p></div>'+
         '<div class="grid3">'+G.map(([t,cards]) => '<div><p class="grupoT">'+t+'</p><div style="display:flex;flex-direction:column;gap:10px">'+
           cards.map(([v,b,s])=>'<div class="kpi"><span class="valor">'+v+'</span><b>'+b+'</b><span>'+s+'</span></div>').join("")+'</div></div>').join("")+'</div>'+
-        '<div class="statement"><b>A soma:</b> todo mundo acelera, o guardrail de fábrica não governa a SUA operação — e a prova já é exigida por lei.</div>';
+        '<div class="statement"><b>A soma:</b> todo mundo acelera, o guardrail de fábrica não governa a SUA operação — e a prova já é exigida por lei.</div>'+
+        '<p style="margin:4px 0 0"><button class="btn ghost" data-goto="'+SLIDES.findIndex(x=>x.tipo==="imagem")+'" style="font-size:12px;padding:8px 13px">Anatomia de um agente → (apêndice técnico)</button></p>' ;
     },
     mecanica(){
       const P = [["Provocação","Nove perguntas diretas — de agentes a modelo de governo"],["Voto anônimo","Pelo QR, no celular — 30 segundos"],
@@ -749,6 +763,8 @@ function vistaTelao(){
     });
   }
   $("#zerar").addEventListener("click", async () => { await store.limpar(); ultimaAssinatura=""; await refresh(); });
+  app.querySelectorAll("[data-goto]").forEach(b =>
+    b.addEventListener("click", () => mudar({ idx:+b.dataset.goto, estado:"aguardando" })));
   if (navigator.wakeLock && !vistaTelao._wl) { navigator.wakeLock.request("screen").then(w=>{vistaTelao._wl=w;}).catch(()=>{}); }
 }
 window.addEventListener("keydown", async e => {
