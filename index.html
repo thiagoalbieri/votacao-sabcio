@@ -119,6 +119,7 @@
   .logl{font-size:12.5px; border-left:3px solid var(--roxo); padding-left:10px}
   .logl.lima{border-color:var(--lima)}
   .logl.fim{border-color:var(--teal); color:var(--teal); font-weight:600}
+  [hidden]{display:none!important}
   @media (prefers-reduced-motion:reduce){ .fill{transition:none} }
 </style>
 
@@ -502,7 +503,10 @@ function telaoSlide(sl){
         '<div class="chips" style="margin-top:10px">'+["Três recados do mercado","Seis provocações","Votação anônima","A sala fala","O que os 21% fazem diferente"].map(c=>'<span class="pill">'+c+'</span>').join("")+'</div></div>';
     },
     apresentador(){
-      return '<div style="margin-block:auto"><p class="eyebrow">QUEM CONDUZ A SESSÃO</p>'+
+      return '<div style="margin-block:auto;display:flex;gap:32px;align-items:center;flex-wrap:wrap">'+
+        '<img src="foto-palestrante.png" alt="Thiago Albieri" onerror="this.hidden=true" '+
+        'style="width:min(300px,30vw);max-width:100%;border-radius:14px;border:2px solid var(--roxo)">'+
+        '<div style="flex:1;min-width:300px"><p class="eyebrow">QUEM CONDUZ A SESSÃO</p>'+
         '<h1 class="titulo1" style="font-size:clamp(24px,3.4vw,44px)">Thiago Albieri</h1>'+
         '<p style="color:var(--roxo);font-weight:600;font-size:17px;margin:4px 0 2px">Sócio · Dados & IA</p>'+
         '<p class="muted" style="font-size:13.5px;margin-top:0">Apllos — consultoria brasileira de tecnologia e transformação digital</p>'+
@@ -513,7 +517,7 @@ function telaoSlide(sl){
          "Experiência prática em SAP, supply chain, plataformas digitais, integração, dados e IA",
          "Projetos de grande escala e alta criticidade em indústria, bens de consumo e serviços financeiros",
          "Foco atual: transformar IA em resultado empresarial — estratégia, governança, adoção e ROI"].map(b=>'<li>'+b+'</li>').join("")+'</ul>'+
-        '<div class="chips" style="margin-top:12px">'+["Dados & IA","Supply Chain","Digital & Integração","Experiência & Processos"].map(c=>'<span class="pill">'+c+'</span>').join("")+'</div></div>';
+        '<div class="chips" style="margin-top:12px">'+["Dados & IA","Supply Chain","Digital & Integração","Experiência & Processos"].map(c=>'<span class="pill">'+c+'</span>').join("")+'</div></div></div>';
     },
     recados(){
       const G = [
