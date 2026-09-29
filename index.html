@@ -119,6 +119,9 @@
   .logl{font-size:12.5px; border-left:3px solid var(--roxo); padding-left:10px}
   .logl.lima{border-color:var(--lima)}
   .logl.fim{border-color:var(--teal); color:var(--teal); font-weight:600}
+  .qrmini{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:10px;padding:9px 13px;font-size:12px;color:var(--texto)}
+  .qrmini>div{background:#fff;padding:6px;border-radius:6px;line-height:0}
+  .qrmini b{display:block;font-size:11px;color:var(--roxo)}
   [hidden]{display:none!important}
   @media (prefers-reduced-motion:reduce){ .fill{transition:none} }
 </style>
@@ -517,7 +520,11 @@ function telaoSlide(sl){
          "Experiência prática em SAP, supply chain, plataformas digitais, integração, dados e IA",
          "Projetos de grande escala e alta criticidade em indústria, bens de consumo e serviços financeiros",
          "Foco atual: transformar IA em resultado empresarial — estratégia, governança, adoção e ROI"].map(b=>'<li>'+b+'</li>').join("")+'</ul>'+
-        '<div class="chips" style="margin-top:12px">'+["Dados & IA","Supply Chain","Digital & Integração","Experiência & Processos"].map(c=>'<span class="pill">'+c+'</span>').join("")+'</div></div></div>';
+        '<div class="chips" style="margin-top:12px">'+["Dados & IA","Supply Chain","Digital & Integração","Experiência & Processos"].map(c=>'<span class="pill">'+c+'</span>').join("")+'</div>'+
+        '<div style="display:flex;gap:14px;margin-top:16px;flex-wrap:wrap">'+
+        '<div class="qrmini"><div id="qr-site"></div><span><b>SITE</b>www.apllos.com.br</span></div>'+
+        '<div class="qrmini"><div id="qr-zap"></div><span><b>WHATSAPP</b>fale direto comigo</span></div>'+
+        '</div></div></div>';
     },
     recados(){
       const G = [
@@ -725,6 +732,11 @@ function vistaTelao(){
   if (mostraQR) { try { new QRCode($("#qr"), { text:urlVoto, width:170, height:170, colorDark:"#212226", colorLight:"#ffffff" }); } catch(e){} }
   pararAnim();
   if (sl.tipo === "anim") iniciarAnim();
+  if (sl.tipo === "apresentador"){
+    const QOPT = { width:96, height:96, colorDark:"#212226", colorLight:"#ffffff" };
+    try { new QRCode($("#qr-site"), Object.assign({ text:"https://www.apllos.com.br" }, QOPT)); } catch(e){}
+    try { new QRCode($("#qr-zap"), Object.assign({ text:"https://wa.me/5511970441112" }, QOPT)); } catch(e){}
+  }
   if (sl.tipo === "foto") desenharRadar();
   const mudar = async p => { await store.setSessao(p); ultimaAssinatura=""; await refresh(); };
   $("#ant").addEventListener("click", () => mudar({ idx:Math.max(0, SES.idx-1), estado:"aguardando" }));
