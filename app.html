@@ -192,8 +192,8 @@ const SLIDES = [
   { tipo:"voto", q:"p7" },
   { tipo:"voto", q:"p8" },
   { tipo:"foto" },
-  { tipo:"sintese" },
   { tipo:"dmbok" },
+  { tipo:"sintese" },
   { tipo:"nove" },
   { tipo:"cta" }
 ];
@@ -562,8 +562,9 @@ function telaoSlide(sl){
         ["Dados governados na base","o agente herda a maturidade do dado",["Catálogo, qualidade e lineage ANTES do agente","Resposta errada rastreia até a origem em minutos","Plataforma governada, não planilha intermediária","Responde às provocações 5 e 6"]],
         ["Soberania radical","o contexto não sai de casa",["Código, prompts e evidência na nuvem DO CLIENTE","Custo por caso de uso, com teto — o CFO enxerga","Trilha imutável: quem, o quê, com que regra, a que custo","Responde às provocações 1 e 4"]]
       ];
-      return '<div><p class="eyebrow">SÍNTESE · PARTE 2</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">O que a sala disse — e o que os 21% fazem diferente</h1></div>'+
-        '<div class="grid3">'+C.map(([t,s,b])=>'<div class="coluna"><h3>'+t+'</h3><p class="sub">'+s+'</p><ul>'+b.map(x=>'<li>'+x+'</li>').join("")+'</ul></div>').join("")+'</div>';
+      return '<div><p class="eyebrow">SÍNTESE · O QUE FAZER</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">O que a sala disse — e o que os 21% fazem diferente</h1></div>'+
+        '<div class="grid3">'+C.map(([t,s,b])=>'<div class="coluna"><h3>'+t+'</h3><p class="sub">'+s+'</p><ul>'+b.map(x=>'<li>'+x+'</li>').join("")+'</ul></div>').join("")+'</div>'+
+        '<div class="statement">E sim — <b>temos um case de governança aplicando essa lente</b>; quem quiser ver como foi, nos encontre no intervalo.</div>';
     },
     dmbok(){
       const A = [
@@ -581,7 +582,7 @@ function telaoSlide(sl){
           '<div class="coluna" style="padding:14px"><h3 style="font-size:14px">'+a+'</h3>'+
           '<p style="font-size:12.8px;margin:6px 0 8px">'+d+'</p>'+
           '<span class="pill" style="font-size:10.5px">na sessão de hoje: '+p+'</span></div>').join("")+'</div>'+
-        '<div class="statement">Quem já tem o DMBOK na casa está mais perto do que imagina — falta projetá-lo sobre os agentes. <b>Nós temos um case de governança aplicando essa lente; quem quiser ver como foi, nos encontre no intervalo.</b></div>'+
+        '<div class="statement">Quem já tem o DMBOK na casa está mais perto do que imagina — <b>falta projetá-lo sobre os agentes</b>. É disso que trata o próximo quadro.</div>'+
         '<p class="rodape">DAMA-DMBOK® é marca da DAMA International — usada aqui como referência de mercado, sem endosso.</p>';
     },
     nove(){
