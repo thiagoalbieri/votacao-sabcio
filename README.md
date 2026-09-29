@@ -20,7 +20,7 @@ A apresentação oficial da sessão é ESTA página web (os PPTX da pasta acima 
 1. Nesta pasta: `DB_SENHA=uma-senha-forte docker compose up -d --build` (Windows PowerShell: `$env:DB_SENHA="uma-senha-forte"; docker compose up -d --build`).
 2. Página no ar em `http://localhost:8080` — o schema do banco sobe sozinho no primeiro start.
 3. Expor na internet pelo caminho de sempre da infra (reverse proxy / subdomínio, ex. `votar.apllos.xmm.com.br` → porta 8080). **HTTPS obrigatório** — câmera de celular só abre link http em alguns aparelhos com aviso.
-4. Trocar `PIN_TELAO` em `app.html` (+ `python build.py`) antes do evento.
+4. O PIN do telão não fica no código: `CONFIG.PIN_HASH` guarda o SHA-256. Para trocar o PIN, gerar novo hash (comando no comentário do CONFIG) e rebuildar.
 5. Testar: URL em 2+ celulares (4G e Wi-Fi) e URL + `#telao` no notebook. A página detecta a API sozinha — se o backend cair, ela avisa (banner MODO DEMO) e o plano B é braço levantado.
 
 ## Uso no palco

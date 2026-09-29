@@ -146,7 +146,9 @@
    API vazia = mesma origem. Se a API não responder, a página cai sozinha em MODO DEMO. */
 const CONFIG = {
   API: "",
-  PIN_TELAO: "apllos2026"
+  // O PIN do telão NÃO vive no código: aqui fica só o hash SHA-256 dele.
+  // Para trocar: python -c "import hashlib;print(hashlib.sha256('NOVO-PIN'.encode()).hexdigest())"
+  PIN_HASH: "7be14048aa7e23fc6b728f720af16f9087bb98032956300da58010192b397a0b"
 };
 
 /* ═══════════ PERGUNTAS DE VOTAÇÃO ═══════════ */
@@ -757,8 +759,14 @@ function vistaTelao(){
       '<div class="card"><p class="eyebrow">Modo telão</p><h2 style="font-size:19px">Chave do facilitador</h2>'+
       '<div style="display:flex;gap:8px;margin-top:10px"><input class="pin" id="pin" type="password" autocomplete="off">'+
       '<button class="btn" id="entrar">Entrar</button></div><p class="muted" id="pinerro" style="font-size:12px"></p></div></div>';
-    $("#entrar").addEventListener("click", () => {
-      if ($("#pin").value === CONFIG.PIN_TELAO) { pinOk = true; ultimaAssinatura=""; render(); }
+    async function checarPin(v){
+      try {
+        const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(v));
+        return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("") === CONFIG.PIN_HASH;
+      } catch(e){ return false; }
+    }
+    $("#entrar").addEventListener("click", async () => {
+      if (await checarPin($("#pin").value)) { pinOk = true; ultimaAssinatura=""; render(); }
       else $("#pinerro").textContent = "Chave incorreta.";
     });
     $("#pin").addEventListener("keydown", e => { if (e.key === "Enter") $("#entrar").click(); });
