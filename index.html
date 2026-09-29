@@ -178,17 +178,17 @@ const PERGUNTAS = {
   p8: { rotulo:"Provocação 8 · Auditoria", pergunta:"O auditor pede evidência sobre um código gerado por IA. Vocês montam em…",
     opcoes:[["A","Horas — está tudo registrado"],["B","Dias — dá trabalho, mas sai"],["C","Semanas — vira caça a prints e e-mails"],["D","Não conseguiríamos montar"]],
     scores:{A:4,B:3,C:2,D:1}, bench:"LGPD já exige prova hoje: agente também é tratamento de dados (sanção até 2% do faturamento).",
-    gancho:"Quem votou C ou D: o que falta para virar horas?" }
+    gancho:"Quem votou C ou D: o que falta para virar horas?",
+    ganchos:{ A:"Horas = trilha automática — vocês já estão a um passo da ISO 42001.",B:"Dias hoje; auditor e ANPD vão pedir horas amanhã.",C:"Caça a prints repete o custo a cada release — trilha imutável zera esse retrabalho.",D:"Sem prova de tratamento, a sanção LGPD chega a 2% do faturamento (teto R$ 50 mi)." } }
 };
 const NIVEIS = ["", "1 · Inicial", "2 · Repetível", "3 · Definido", "4 · Gerenciado"];
 
 /* ═══════════ ROTEIRO SEQUENCIAL (a apresentação inteira) ═══════════ */
 const SLIDES = [
-  { tipo:"anim",
-    ganchos:{ A:"Horas = trilha automática — vocês já estão a um passo da ISO 42001.",B:"Dias hoje; auditor e ANPD vão pedir horas amanhã.",C:"Caça a prints repete o custo a cada release — trilha imutável zera esse retrabalho.",D:"Sem prova de tratamento, a sanção LGPD chega a 2% do faturamento (teto R$ 50 mi)." } },
-  { tipo:"apresentador" },
-  { tipo:"recados" },
   { tipo:"mecanica" },
+  { tipo:"apresentador" },
+  { tipo:"anim" },
+  { tipo:"recados" },
   { tipo:"voto", q:"aq" },
   { tipo:"voto", q:"p1" },
   { tipo:"voto", q:"p2" },
@@ -469,7 +469,7 @@ function iniciarAnim(){
 function telaoSlide(sl){
   const T = {
     anim(){
-      return '<div><p class="eyebrow">ABERTURA · ISTO JÁ ACONTECE</p>'+
+      return '<div><p class="eyebrow">ISTO JÁ ACONTECE</p>'+
         '<h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Agentes decidindo juntos — um problema de negócio resolvido em segundos</h1>'+
         '<p class="muted" style="font-size:13.5px;max-width:72ch">Uma ruptura de estoque prevista. Cinco agentes negociam a resposta entre si; um humano aprova; tudo fica registrado. Acompanhem o log à direita — e reparem na última linha.</p></div>'+
         '<div class="animGrid"><canvas class="cv" id="cv"></canvas><div class="logp" id="animlog"></div></div>'+
@@ -515,10 +515,10 @@ function telaoSlide(sl){
       const P = [["Provocação","Oito perguntas diretas — de agentes a estrutura de dados"],["Voto anônimo","Pelo QR, no celular — 30 segundos"],
         ["Resultado na hora","A distribuição da sala aparece aqui"],["A sala fala","Quem quiser defende sua resposta"],
         ["Contraste","Sala × números de mercado"],["Síntese","A fotografia de maturidade da sala no final"]];
-      return '<div><p class="eyebrow">COMO VAI FUNCIONAR</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Vocês conduzem esta sessão</h1></div>'+
+      return '<div><p class="eyebrow">CONNECT SESSION · A DINÂMICA</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Bem-vindos — vocês conduzem esta sessão</h1></div>'+
         '<div class="passos">'+P.map(([t,d])=>'<div class="passo-c"><b>'+t+'</b><span>'+d+'</span></div>').join("")+'</div>'+
         '<div class="statement"><b>Regra da casa:</b> não existe resposta errada — existe fotografia honesta. O voto é anônimo justamente para isso.</div>'+
-        '<p class="muted" style="font-size:13px">Aponte a câmera para o QR ao lado — a primeira pergunta é só um teste.</p>';
+        '<p class="muted" style="font-size:13px">Aponte a câmera para o QR ao lado já — a primeira votação é só um aquecimento, daqui a pouco.</p>';
     },
     voto(){
       const q = PERGUNTAS[sl.q];
