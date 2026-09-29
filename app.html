@@ -606,7 +606,7 @@ function telaoSlide(sl){
         ["Um caso de uso na esteira",["Piloto governado de ponta a ponta","Caso real, custo medido, evidência desde o dia 1","Entregável: caso em produção + trilho reutilizável"]]];
       return '<div><p class="eyebrow">TRÊS CONVERSAS PARA OS INTERVALOS</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Uma das nove perguntas sem resposta? Nos encontre no intervalo.</h1></div>'+
         '<div class="grid3">'+P.map(([t,b])=>'<div class="coluna"><h3 style="font-size:15px">'+t+'</h3><ul>'+b.map(x=>'<li>'+x+'</li>').join("")+'</ul></div>').join("")+'</div>'+
-        '<div class="statement"><b>www.apllos.com</b> · material da sessão (números com fonte + as nove perguntas) disponível com a organização.</div>';
+        '<div class="statement"><b>www.apllos.com</b> · o material da sessão — as nove perguntas e os números com fonte — está agora no celular de quem escaneou o QR. Um print e é seu.</div>';
     }
   };
   return T[sl.tipo]();
@@ -628,11 +628,24 @@ function foneSlide(sl){
       '<h2 style="font-size:19px">Votação encerrada.</h2>'+
       '<p class="muted" style="font-size:13.5px">O resultado está no telão'+(votei ? ' — seu voto foi '+votei : '')+'. A próxima pergunta abre sozinha aqui.</p></div>';
   }
-  if (sl.tipo === "cta")
-    return '<div class="card"><p class="eyebrow">OBRIGADO</p><span class="check">✓</span>'+
-      '<h2 style="font-size:19px">Sessão encerrada.</h2>'+
-      '<p style="font-size:14px"><b>www.apllos.com</b></p>'+
-      '<p class="muted" style="font-size:12.5px">Material da sessão (números com fonte + as nove perguntas para o comitê) com a organização — ou fale com a Apllos no intervalo.</p></div>';
+  if (sl.tipo === "cta"){
+    const FONTES = [
+      "40% vão desligar/rebaixar agentes até 2027 — Gartner, 05/2026",
+      "82% têm agentes que a TI desconhece — Cloud Security Alliance, 04/2026",
+      "21% com governança madura; 74% planejam em 2 anos — Deloitte, 08/2026",
+      "Sanção LGPD: até 2% do faturamento, teto R$ 50 mi por infração — ANPD",
+      "EU AI Act: obrigações de alto risco a partir de 12/2027",
+      "ISO/IEC 42001: sistema de gestão de IA, já certificável"
+    ];
+    return '<div class="card"><p class="eyebrow">OBRIGADO — O MATERIAL É SEU</p><span class="check">✓</span>'+
+      '<h2 style="font-size:19px">Tire um print destas duas listas.</h2>'+
+      '<p style="font-size:14px;margin:6px 0 0"><b>www.apllos.com</b> · nos encontre no intervalo.</p></div>'+
+      '<div class="card"><p class="eyebrow" style="font-size:10px">AS NOVE PERGUNTAS PARA O SEU COMITÊ</p>'+
+      '<ol class="nove" style="font-size:12.5px">'+NOVE.map(p=>'<li>'+p+'</li>').join("")+'</ol></div>'+
+      '<div class="card"><p class="eyebrow" style="font-size:10px">OS NÚMEROS DA SESSÃO, COM FONTE</p>'+
+      '<ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:12.5px">'+
+      FONTES.map(f=>'<li>'+f+'</li>').join("")+'</ul></div>';
+  }
   return '<div class="card"><p class="eyebrow">Aguarde</p><h2 style="font-size:19px">A próxima votação abre aqui sozinha.</h2>'+
     '<p class="muted" style="font-size:13.5px">Mantenha esta página aberta e acompanhe o telão.</p></div>'+
     '<p style="text-align:right"><a href="#telao" style="color:var(--muted);font-size:11.5px;text-decoration:none">Sou o facilitador →</a></p>';
