@@ -119,6 +119,16 @@
   .logl{font-size:12.5px; border-left:3px solid var(--roxo); padding-left:10px}
   .logl.lima{border-color:var(--lima)}
   .logl.fim{border-color:var(--teal); color:var(--teal); font-weight:600}
+  .imgwrap{position:relative;display:inline-block;line-height:0;max-width:100%}
+  .imgwrap img{display:block}
+  .marcador{position:absolute;transform:translate(-50%,-100%);margin-top:-8px;background:var(--roxo);color:#17131c;
+    font-weight:600;font-size:11.5px;padding:5px 11px;border-radius:999px;white-space:nowrap;
+    box-shadow:0 3px 12px rgba(0,0,0,.45);opacity:0;pointer-events:none}
+  .marcador::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);
+    border:7px solid transparent;border-top-color:var(--roxo)}
+  .imgwrap.mostra .marcador{animation:pop .45s cubic-bezier(.2,.9,.3,1.3) forwards}
+  @keyframes pop{from{opacity:0;transform:translate(-50%,-140%) scale(.6)}to{opacity:1;transform:translate(-50%,-100%) scale(1)}}
+  @media (prefers-reduced-motion:reduce){ .imgwrap.mostra .marcador{animation:none;opacity:1} }
   .qrmini{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:10px;padding:9px 13px;font-size:12px;color:var(--texto)}
   .qrmini>div{background:#fff;padding:6px;border-radius:6px;line-height:0}
   .qrmini b{display:block;font-size:11px;color:var(--roxo)}
@@ -219,6 +229,8 @@ const SLIDES = [
   { tipo:"nove" },
   { tipo:"cta" },
   { tipo:"imagem", titulo:"Um agente governável é um agente em camadas",
+    marcadores:[[50,16,"DDD · SDD como contexto"],[37,34,"Instruções corporativas"],[64,34,"Skills reutilizáveis"],
+      [50,49,"Harness corporativo"],[30,65,"Guardrails & policies"],[70,65,"Memória governada"],[50,84,"Curadoria de tools & MCP"]],
     sub:"O modelo — o 'cérebro' que todo mundo discute — é UMA caixa neste desenho. Instruções, skills, guardrails, memória, orquestração e ferramentas são camadas definidas por engenharia, cada uma com dono e regra. Quem não define camadas entrega o controle ao modelo; quem define troca o modelo amanhã sem refazer o sistema.",
     src:"arquitetura-agente.png",
     rodape:"Apêndice técnico — arquitetura de referência de um agente com modelo generativo. A governança mora nas camadas, não no modelo." }
@@ -510,10 +522,15 @@ function telaoSlide(sl){
         '<h1 class="q" style="font-size:clamp(18px,2.4vw,28px)">'+esc(sl.titulo)+'</h1>'+
         (sl.sub ? '<p class="muted" style="font-size:12.5px;max-width:88ch;margin:4px 0 0">'+esc(sl.sub)+'</p>' : '')+'</div>'+
         '<div class="card" style="padding:10px;display:flex;justify-content:center">'+
-        '<img src="'+sl.src+'" alt="" style="max-width:100%;max-height:58vh;border-radius:8px;object-fit:contain"></div>'+
+        '<div class="imgwrap" id="imgwrap"><img src="'+sl.src+'" alt="" style="max-width:100%;max-height:58vh;border-radius:8px;object-fit:contain">'+
+        (sl.marcadores||[]).map(([x,y,lb],i) =>
+          '<span class="marcador" style="left:'+x+'%;top:'+y+'%;animation-delay:'+(i*0.22)+'s">'+esc(lb)+'</span>').join("")+
+        '</div></div>'+
         '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">'+
         '<p class="rodape" style="margin:0">'+esc(sl.rodape)+'</p>'+
-        '<button class="btn ghost" data-goto="'+volta+'">← Voltar ao cenário</button></div>';
+        '<span style="display:flex;gap:8px">'+
+        '<button class="btn" id="marcar">Onde a Apllos atua</button>'+
+        '<button class="btn ghost" data-goto="'+volta+'">← Voltar ao cenário</button></span></div>';
     },
     capa(){
       return '<div style="margin-block:auto"><p class="eyebrow">SAB CIO 2026 · SESSÃO APLLOS · 30 MIN</p>'+
@@ -798,6 +815,8 @@ function vistaTelao(){
   $("#zerar").addEventListener("click", async () => { await store.limpar(); ultimaAssinatura=""; await refresh(); });
   app.querySelectorAll("[data-goto]").forEach(b =>
     b.addEventListener("click", () => mudar({ idx:+b.dataset.goto, estado:"aguardando" })));
+  const bm = $("#marcar");
+  if (bm) bm.addEventListener("click", () => $("#imgwrap").classList.toggle("mostra"));
   if (navigator.wakeLock && !vistaTelao._wl) { navigator.wakeLock.request("screen").then(w=>{vistaTelao._wl=w;}).catch(()=>{}); }
 }
 window.addEventListener("keydown", async e => {
