@@ -168,11 +168,11 @@ const PERGUNTAS = {
     scores:null, bench:"A trava campeã ganha os próximos minutos de conversa.",
     gancho:"Quem quer defender a trava que escolheu?",
     ganchos:{ A:"Segurança barra porque não desenhou o trilho — quem desenha o freio libera o acelerador.",B:"Custo imprevisível está na raiz dos 40% do Gartner — teto por caso de uso resolve.",C:"Qualidade sem eval automatizado é opinião contra opinião.",D:"Sem esteira, cada piloto custa o preço do primeiro — para sempre.",E:"Adoção vem de caso de uso puxado pela dor do negócio — nunca pela tecnologia.",F:"A IA não criou o problema de dados: só expôs a dívida que já existia." } },
-  p8: { rotulo:"Provocação 8 · Auditoria", pergunta:"O auditor pede evidência sobre um código gerado por IA. Vocês montam em…",
+  p8: { rotulo:"Provocação 8 · Auditoria", pergunta:"O auditor pede evidência sobre uma decisão executada por um agente de IA. Vocês montam em…",
     opcoes:[["A","Horas — está tudo registrado"],["B","Dias — dá trabalho, mas sai"],["C","Semanas — vira caça a prints e e-mails"],["D","Não conseguiríamos montar"]],
     scores:{A:4,B:3,C:2,D:1}, bench:"LGPD já exige prova hoje: agente também é tratamento de dados (sanção até 2% do faturamento).",
     gancho:"Quem votou C ou D: o que falta para virar horas?",
-    ganchos:{ A:"Horas = trilha automática — vocês já estão a um passo da ISO 42001.",B:"Dias hoje; auditor e ANPD vão pedir horas amanhã.",C:"Caça a prints repete o custo a cada release — trilha imutável zera esse retrabalho.",D:"Sem prova de tratamento, a sanção LGPD chega a 2% do faturamento (teto R$ 50 mi)." } }
+    ganchos:{ A:"Horas = trilha automática — vocês já estão a um passo da ISO 42001.",B:"Dias hoje; auditor e ANPD vão pedir horas amanhã.",C:"Caça a prints repete o custo a cada auditoria — trilha imutável zera esse retrabalho.",D:"Sem prova de tratamento, a sanção LGPD chega a 2% do faturamento (teto R$ 50 mi)." } }
 };
 const NIVEIS = ["", "1 · Inicial", "2 · Repetível", "3 · Definido", "4 · Gerenciado"];
 
@@ -201,9 +201,9 @@ const NOVE = [
   "Quantos agentes rodam hoje com acesso a dados de produção — e quem responde por cada um?",
   "Nossa política de IA é executada por algum sistema — ou é um PDF?",
   "Se um agente violar uma regra de arquitetura agora, o que acontece: aviso, bloqueio ou nada?",
-  "Uma aprovação de código sobrevive ao código mudar depois dela?",
+  "Uma aprovação humana sobrevive à proposta do agente mudar depois dela?",
   "Sabemos o custo de inferência POR caso de uso — com teto e corte?",
-  "Que evidência entregamos ao auditor sobre código gerado por IA — em quanto tempo?",
+  "Que evidência entregamos ao auditor sobre decisões executadas por IA — em quanto tempo?",
   "Nosso contexto (código, prompts, logs) está em nuvem própria ou na do fornecedor?",
   "Qualidade de resposta é medida por eval automatizado ou por opinião?",
   "Se trocarmos de fornecedor de IA amanhã, o histórico e as regras vêm conosco?"
@@ -558,7 +558,7 @@ function telaoSlide(sl){
     sintese(){
       const C = [
         ["Política executável","não declaratória",["Regra de arquitetura é verificação que RODA","O agente tenta, é bloqueado, corrige — e fica registrado","Exceção existe — com prazo e com dono","Responde às provocações 2 e 3"]],
-        ["Humano no gate","por desenho, não por gargalo",["Não existe 'aprovar tudo'","Aprovação amarra revisor + tarefa + hash do código","Código mudou? A aprovação cai sozinha","Responde à provocação 8"]],
+        ["Humano no gate","por desenho, não por gargalo",["Não existe 'aprovar tudo'","Aprovação amarrada à versão EXATA da proposta — plano, decisão ou código","A proposta mudou depois? A aprovação caduca sozinha","Vale igual para transferir um lote ou promover um sistema"]],
         ["Dados governados na base","o agente herda a maturidade do dado",["Catálogo, qualidade e lineage ANTES do agente","Resposta errada rastreia até a origem em minutos","Plataforma governada, não planilha intermediária","Responde às provocações 5 e 6"]],
         ["Soberania radical","o contexto não sai de casa",["Código, prompts e evidência na nuvem DO CLIENTE","Custo por caso de uso, com teto — o CFO enxerga","Trilha imutável: quem, o quê, com que regra, a que custo","Responde às provocações 1 e 4"]]
       ];
