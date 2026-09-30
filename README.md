@@ -16,6 +16,23 @@ A apresentação oficial da sessão é ESTA página web (os PPTX da pasta acima 
 | `Dockerfile` + `docker-compose.yml` | Stack completo: Postgres 16 + app na porta 8080. |
 | `db/init.sql` | Schema do banco — roda sozinho no primeiro start do Postgres. |
 
+## Versões (e como voltar atrás)
+| Versão | Tese | Onde está |
+|---|---|---|
+| **v2 — vigente** | "A Arquitetura Oculta do ROI" (título oficial da EBDI): processo, integração, custo por decisão e governo | branch `main` (e `v2-arquitetura-roi`) |
+| v1 | "IA agêntica em produção — com freio e com prova": governança como falha | tag `v1-governanca` |
+
+**Voltar para a v1** (sem apagar a v2 — ela continua no branch `v2-arquitetura-roi`):
+```bash
+git checkout main
+git checkout v1-governanca -- .
+git commit -m "rollback: volta para a v1 (governanca)"
+git push
+railway up --service app --detach
+```
+**Voltar para a v2 depois:** mesma sequência trocando `v1-governanca` por `v2-arquitetura-roi`.
+Antes da sessão, em qualquer versão: telão no passo 1 e "Zerar votos" (as perguntas mudaram de significado entre as versões).
+
 ## Onde está no ar (produção)
 | O quê | URL |
 |---|---|

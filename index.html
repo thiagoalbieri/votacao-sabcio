@@ -159,53 +159,53 @@ const PERGUNTAS = {
   aq: { rotulo:"Aquecimento", pergunta:"De qual setor você vem?",
     opcoes:[["A","Indústria"],["B","Varejo e consumo"],["C","Serviços financeiros"],["D","Saúde"],["E","Outro"]],
     scores:null, bench:"Aquecimento — serve para testar o QR com a sala.", gancho:"Todo mundo conseguiu votar? Então vamos ao que interessa." },
-  p1: { rotulo:"Provocação 1 · Inventário", pergunta:"Quantos agentes de IA rodam hoje na sua empresa com acesso a dados reais?",
-    opcoes:[["A","Sei o número exato — temos inventário formal"],["B","Tenho uma boa ideia — mas sem inventário"],["C","Honestamente, não sei"],["D","Ainda não temos agentes em produção"]],
-    scores:{A:4,B:2,C:1,D:null}, bench:"Mercado: 82% das organizações têm agentes que a TI desconhece (Cloud Security Alliance, 04/2026).",
-    gancho:"Quem votou C: o que impede o inventário?",
-    ganchos:{ A:"Inclui os agentes que as áreas criaram sem a TI — e os copilots pessoais?",B:"A 'boa ideia' é onde os 82% da CSA moravam antes do primeiro incidente.",C:"Honestidade rara — o inventário é o passo 1, e leva semanas, não meses.",D:"Melhor posição da sala: quem nasce governado nunca precisa de anistia." } },
-  p2: { rotulo:"Provocação 2 · Política", pergunta:"A política de IA da sua empresa hoje é o quê, na prática?",
-    opcoes:[["A","Um documento — PDF, intranet, código de conduta"],["B","Um comitê que revisa caso a caso"],["C","Regras executadas por sistema — bloqueiam de fato"],["D","Ainda não temos política formal"]],
-    scores:{A:2,B:3,C:4,D:1}, bench:"Mercado: só 21% têm governança madura para agentes (Deloitte, 08/2026).",
-    gancho:"Quem votou A: quando foi que o PDF bloqueou algo?",
-    ganchos:{ A:"Política em PDF é a norma do mercado — por isso só 21% são maduras (Deloitte).",B:"Comitê escala? Quantos casos por semana ele aguenta antes de virar fila?",C:"Vocês estão nos 21% — que sistema executa a regra? A sala quer saber.",D:"Sem política formal + agentes rodando = o perfil dos 40% do Gartner." } },
-  p3: { rotulo:"Provocação 3 · Violação", pergunta:"Se um agente violar uma regra de arquitetura AGORA, o que acontece?",
-    opcoes:[["A","Nada — provavelmente ninguém perceberia"],["B","Alguém percebe depois, em revisão ou incidente"],["C","Gera alerta para um time responder"],["D","É bloqueado na hora — e fica registrado"]],
-    scores:{A:1,B:2,C:3,D:4}, bench:"Aviso é opinião; bloqueio é política.",
-    gancho:"Quem votou D: como isso foi construído aí?",
-    ganchos:{ A:"É a diferença entre governança e sorte — 82% nem saberiam onde olhar (CSA).",B:"Perceber depois custa o preço do incidente + o da auditoria que o investiga.",C:"Alerta é meio caminho: quem responde, em quanto tempo — e o agente seguiu rodando?",D:"Bloqueio com registro é o que separa os 21% — como foi construído aí?" } },
-  p4: { rotulo:"Provocação 4 · Custo", pergunta:"Quem responde pela conta de inferência de IA na sua empresa?",
+  p1: { rotulo:"Provocação 1 · Processo", pergunta:"Quando vocês colocam um agente num processo, o que acontece com o processo?",
+    opcoes:[["A","É redesenhado pensando no agente"],["B","É ajustado nos pontos de contato"],["C","O agente é encaixado no processo como está"],["D","Ainda não temos agente em processo produtivo"]],
+    scores:{A:4,B:3,C:1,D:null}, bench:"Agente colado no processo de ontem automatiza o desperdício de ontem — o ROI mora no redesenho, não no modelo.",
+    gancho:"Quem votou A: quem conduziu o redesenho — TI ou negócio?",
+    ganchos:{ A:"Redesenho é raro e caro de fazer — e é onde está o retorno. Quem conduziu: TI ou negócio?",B:"Ajuste nos pontos de contato é o meio-termo honesto — o risco é o agente herdar os gargalos.",C:"Agente encaixado no processo antigo automatiza o desperdício — e a conta chega em tokens.",D:"Ótimo momento: dá para desenhar processo e agente juntos desde o início." } },
+  p2: { rotulo:"Provocação 2 · Integração", pergunta:"Como os agentes de vocês se conectam aos sistemas corporativos (ERP, CRM, legados)?",
+    opcoes:[["A","Por uma camada de integração reutilizável — APIs e conectores governados"],["B","Integração ponto a ponto, feita caso a caso"],["C","Via RPA, tela ou planilha intermediária"],["D","Ainda não se conectam — só leem documentos"]],
+    scores:{A:4,B:2,C:1,D:null}, bench:"Integração é a parte cara e invisível do agente: o 2º caso só fica barato se o 1º deixou conectores reutilizáveis.",
+    gancho:"Quem votou B: quantos conectores vocês mantêm hoje?",
+    ganchos:{ A:"Camada reutilizável: vocês já jogam o jogo do custo marginal — quantos casos usam os mesmos conectores?",B:"Ponto a ponto funciona no 1º caso; no 5º vira um emaranhado que ninguém quer manter.",C:"RPA e planilha como integração: o agente fica refém da tela que muda sem aviso.",D:"Só lendo documentos: o valor de verdade começa quando o agente age nos sistemas — com governo." } },
+  p3: { rotulo:"Provocação 3 · Custo", pergunta:"Quem responde pela conta de inferência de IA na sua empresa?",
     opcoes:[["A","Ninguém — o custo aparece diluído na fatura da nuvem"],["B","Medimos no agregado, sem dono por caso de uso"],["C","Custo por caso de uso, com dono nomeado"],["D","Custo por caso de uso com teto e corte automático"]],
-    scores:{A:1,B:2,C:3,D:4}, bench:"Custo é a 2ª causa dos 40% que vão desligar agentes até 2027 (Gartner, 05/2026).",
+    scores:{A:1,B:2,C:3,D:4}, bench:"Custo aparece ao lado de governança entre as causas dos 40% que vão desligar agentes até 2027 (Gartner, 05/2026).",
     gancho:"Quem votou A: quanto foi a fatura de IA no mês passado?",
-    ganchos:{ A:"Custo invisível é a 2ª causa dos 40% do Gartner — e há relato público de budget ANUAL de IA consumido em um mês.",B:"Agregado não sobrevive ao CFO: qual caso de uso paga a conta?",C:"Dono nomeado é o degrau que a maioria pula — falta só o teto com corte.",D:"Teto + corte automático: o CFO já descobriu que virou aliado?" } },
-  p5: { rotulo:"Provocação 5 · Dados", pergunta:"Seus agentes de IA consomem dados de onde, na prática?",
+    ganchos:{ A:"Custo invisível está entre as causas dos 40% do Gartner — e há relato de budget ANUAL de IA consumido em um mês.",B:"Agregado não sobrevive ao CFO: qual caso de uso paga a conta?",C:"Dono nomeado é o degrau que a maioria pula — falta só o teto com corte.",D:"Teto + corte automático: o CFO já descobriu que virou aliado?" } },
+  p4: { rotulo:"Provocação 4 · Modelo por tarefa", pergunta:"Quem decide qual modelo de IA roda em cada tarefa?",
+    opcoes:[["A","Roteamos por tarefa: modelo menor onde basta, maior onde paga"],["B","Um modelo padrão para tudo"],["C","Cada time escolhe o seu"],["D","O fornecedor decide — vem no pacote"]],
+    scores:{A:4,B:2,C:1,D:1}, bench:"Nem toda tarefa pede o modelo mais caro: rotear por custo × qualidade é a alavanca de ROI mais subestimada.",
+    gancho:"Quem votou A: vocês medem quanto esse roteamento economiza?",
+    ganchos:{ A:"Roteamento por custo × qualidade: vocês medem a economia? É um dos maiores ganhos silenciosos.",B:"Modelo padrão para tudo é simples — e caro: preço de especialista para tarefa de estagiário.",C:"Cada time com o seu: sem padrão, não há poder de negociação nem reuso.",D:"Pacote fechado: quando o preço mudar — e vai mudar —, vocês conseguem sair?" } },
+  p5: { rotulo:"Provocação 5 · Reuso", pergunta:"O segundo caso de uso de IA de vocês custou quanto, comparado ao primeiro?",
+    opcoes:[["A","Bem menos — reaproveitamos integrações, skills e trilho"],["B","Parecido — cada caso é um projeto novo"],["C","Mais caro — cada área refez a fundação"],["D","Ainda estamos no primeiro caso"]],
+    scores:{A:4,B:2,C:1,D:null}, bench:"O teste do ROI em escala: o custo marginal do próximo caso de uso tem que cair.",
+    gancho:"Quem votou A: o que exatamente foi reaproveitado?",
+    ganchos:{ A:"É o sinal mais forte de maturidade da sessão — o que exatamente foi reaproveitado?",B:"Custo linear: 10 casos custam 10 vezes. É a curva que faz o CFO desligar no quarto.",C:"Fundação refeita por área é o preço de não ter plataforma comum — a provocação 9 volta a isso.",D:"Então desenhem o primeiro como plataforma: é aí que o segundo fica barato." } },
+  p6: { rotulo:"Provocação 6 · Dados", pergunta:"Seus agentes de IA consomem dados de onde, na prática?",
     opcoes:[["A","De uma plataforma governada — catálogo, qualidade, lineage"],["B","Direto de APIs e sistemas, caso a caso"],["C","De extrações e planilhas intermediárias"],["D","Não sabemos exatamente de onde"]],
-    scores:{A:4,B:2,C:1,D:1}, bench:"Agente bom em cima de dado ruim só erra mais rápido — a maturidade de IA começa na estrutura de dados.",
+    scores:{A:4,B:2,C:1,D:1}, bench:"Agente bom em cima de dado ruim só erra mais rápido — e cada erro repetido é custo.",
     gancho:"Quem votou B ou C: quem responde quando o dado estiver errado?",
     ganchos:{ A:"Fundação dos 21% — e o catálogo cobre só tabelas, ou também modelos e agentes?",B:"API caso a caso: quem avisa o agente quando o contrato do dado mudar?",C:"Planilha intermediária = lineage quebrado logo no primeiro elo.",D:"Se ninguém sabe a origem, a resposta do agente é opinião com boa aparência." } },
-  p6: { rotulo:"Provocação 6 · Lineage", pergunta:"Um agente responde errado por causa de dado ruim. Vocês descobrem a origem como?",
-    opcoes:[["A","Lineage: rastreamos até a fonte em minutos"],["B","Investigação manual — leva dias"],["C","Só se alguém do negócio reclamar"],["D","Provavelmente nunca descobriríamos"]],
-    scores:{A:4,B:2,C:1,D:1}, bench:"Sem rastreabilidade do dado, a resposta do agente é uma opinião com boa aparência.",
-    gancho:"Quem votou A: que ferramenta sustenta esse lineage?",
-    ganchos:{ A:"Minutos até a fonte — a rastreabilidade que o EU AI Act exigirá do alto risco (12/2027).",B:"Dias de investigação × decisão que o agente já executou: quem chega primeiro?",C:"Descobrir pelo cliente é o caminho mais caro que existe.",D:"'Nunca descobriríamos' e a prova de tratamento da LGPD não convivem bem." } },
-  p7: { rotulo:"Provocação 7 · A trava", pergunta:"O que mais trava seus agentes de chegar à produção?",
-    opcoes:[["A","Segurança e compliance barram"],["B","Custo imprevisível — ninguém aprova"],["C","Qualidade: as respostas não são confiáveis"],["D","Falta esteira e método — cada piloto é artesanal"],["E","Adoção: as áreas de negócio não usam"],["F","Dados: a base não está pronta"]],
+  p7: { rotulo:"Provocação 7 · Medição", pergunta:"Como vocês medem o retorno de um agente em produção?",
+    opcoes:[["A","Indicador de negócio acordado antes, com linha de base"],["B","Horas economizadas, estimadas"],["C","Adoção — quantas pessoas usam"],["D","Ainda não medimos"]],
+    scores:{A:4,B:2,C:1,D:1}, bench:"Sem linha de base antes do piloto, ROI vira opinião — e opinião não sobrevive ao primeiro corte de orçamento.",
+    gancho:"Quem votou A: quem assina esse número — TI ou negócio?",
+    ganchos:{ A:"Linha de base antes do piloto: é o que transforma IA em linha no P&L — quem assina esse número?",B:"Hora economizada que não vira capacidade realocada não aparece no resultado — o CFO sabe disso.",C:"Adoção é condição, não retorno: muita gente usando algo caro pode ser só uma conta maior.",D:"Sem medição, o primeiro corte de orçamento leva o agente junto." } },
+  p8: { rotulo:"Provocação 8 · A trava", pergunta:"O que mais trava seus agentes de chegar à produção?",
+    opcoes:[["A","Segurança e compliance barram"],["B","Custo imprevisível — ninguém aprova"],["C","Integração com sistemas legados"],["D","Qualidade: as respostas não são confiáveis"],["E","Processo e adoção: o negócio não mudou junto"],["F","Dados: a base não está pronta"]],
     scores:null, bench:"A trava campeã ganha os próximos minutos de conversa.",
     gancho:"Quem quer defender a trava que escolheu?",
-    ganchos:{ A:"Segurança barra porque não desenhou o trilho — quem desenha o freio libera o acelerador.",B:"Custo imprevisível está na raiz dos 40% do Gartner — teto por caso de uso resolve.",C:"Qualidade sem eval automatizado é opinião contra opinião.",D:"Sem esteira, cada piloto custa o preço do primeiro — para sempre.",E:"Adoção vem de caso de uso puxado pela dor do negócio — nunca pela tecnologia.",F:"A IA não criou o problema de dados: só expôs a dívida que já existia." } },
-  p8: { rotulo:"Provocação 8 · Auditoria", pergunta:"O auditor pede evidência sobre uma decisão executada por um agente de IA. Vocês montam em…",
-    opcoes:[["A","Horas — está tudo registrado"],["B","Dias — dá trabalho, mas sai"],["C","Semanas — vira caça a prints e e-mails"],["D","Não conseguiríamos montar"]],
-    scores:{A:4,B:3,C:2,D:1}, bench:"LGPD já exige prova hoje: agente também é tratamento de dados (sanção até 2% do faturamento).",
-    gancho:"Quem votou C ou D: o que falta para virar horas?",
-    ganchos:{ A:"Horas = trilha automática — vocês já estão a um passo da ISO 42001.",B:"Dias hoje; auditor e ANPD vão pedir horas amanhã.",C:"Caça a prints repete o custo a cada auditoria — trilha imutável zera esse retrabalho.",D:"Sem prova de tratamento, a sanção LGPD chega a 2% do faturamento (teto R$ 50 mi)." } },
-  p9: { rotulo:"Provocação 9 · Modelo", pergunta:"Quem governa a IA na sua organização hoje?",
+    ganchos:{ A:"Segurança barra porque não desenhou o trilho — quem desenha o freio libera o acelerador.",B:"Custo imprevisível está entre as causas dos 40% do Gartner — teto por caso de uso resolve.",C:"Legado é onde o ROI se esconde: uma camada de integração bem feita paga todos os casos seguintes.",D:"Qualidade sem eval automatizado é opinião contra opinião.",E:"Processo herdado derruba qualquer agente — adoção vem de caso puxado pela dor do negócio.",F:"A IA não criou o problema de dados: só expôs a dívida que já existia." } },
+  p9: { rotulo:"Provocação 9 · Modelo de governo", pergunta:"Quem governa a IA na sua organização hoje?",
     opcoes:[["A","Um órgão central — comitê ou CoE aprova caso a caso"],["B","Cada área cuida da sua própria IA"],["C","Híbrido — regras e plataforma centrais, execução nas áreas"],["D","Ninguém formalmente — ainda está se organizando"]],
-    scores:null, bench:"O debate do momento: central × descentralizado. O consenso que emerge é FEDERAR — política e plataforma centrais, execução nos domínios; o mesmo desenho que o data mesh consagrou como governança federada.",
+    scores:null, bench:"O consenso que emerge é FEDERAR: política e plataforma centrais, execução nos domínios. É também o desenho que faz o próximo caso custar menos — o mesmo que o data mesh consagrou como governança federada.",
     gancho:"Quem opera o híbrido: onde ficou o poder de veto?",
     ganchos:{ A:"Centralização pura escala? Quantos casos por semana o comitê aguenta antes de virar a fila que todo mundo contorna?",
-      B:"Descentralização sem regra comum é como nascem os 82% de shadow agents (CSA).",
-      C:"O modelo que os analistas convergem: centralize o FREIO, descentralize a DIREÇÃO — quem aqui já faz isso com dados (data mesh) está a um passo.",
+      B:"Cada área com a sua é como nascem os 82% de shadow agents (CSA) — e a fundação paga várias vezes.",
+      C:"Centralize o FREIO e a PLATAFORMA, descentralize a DIREÇÃO — quem já faz isso com dados (data mesh) está a um passo.",
       D:"Sem dono, a governança acontece do mesmo jeito — só que pelo incidente." } }
 };
 const NIVEIS = ["", "1 · Inicial", "2 · Repetível", "3 · Definido", "4 · Gerenciado"];
@@ -216,6 +216,12 @@ const SLIDES = [
   { tipo:"apresentador" },
   { tipo:"anim" },
   { tipo:"recados" },
+  { tipo:"imagem", titulo:"Onde o ROI de um agente é ganho — ou perdido",
+    marcadores:[[50,16,"Processo e método como contexto"],[37,34,"Instruções corporativas"],[64,34,"Skills reutilizáveis"],
+      [50,49,"Harness + roteamento de modelos"],[30,65,"Guardrails & policies"],[70,65,"Memória: contexto enxuto"],[50,84,"Integrações reutilizáveis (APIs · MCP)"]],
+    sub:"O modelo é UMA caixa neste desenho — e raramente é onde a conta estoura. Integrações, contexto, memória, orquestração e ferramentas decidem quantas chamadas, quantos tokens e quanto retrabalho cada decisão custa. Quem define essas camadas escala; quem não define paga cada caso como se fosse o primeiro.",
+    src:"arquitetura-agente.png",
+    rodape:"Arquitetura de referência de um agente com modelo generativo. O retorno — e o governo — moram nas camadas, não no modelo." },
   { tipo:"voto", q:"aq" },
   { tipo:"voto", q:"p1" },
   { tipo:"voto", q:"p2" },
@@ -231,23 +237,17 @@ const SLIDES = [
   { tipo:"iafirst" },
   { tipo:"custo" },
   { tipo:"nove" },
-  { tipo:"cta" },
-  { tipo:"imagem", titulo:"Um agente governável é um agente em camadas",
-    marcadores:[[50,16,"DDD · SDD como contexto"],[37,34,"Instruções corporativas"],[64,34,"Skills reutilizáveis"],
-      [50,49,"Harness corporativo"],[30,65,"Guardrails & policies"],[70,65,"Memória governada"],[50,84,"Curadoria de tools & MCP"]],
-    sub:"O modelo — o 'cérebro' que todo mundo discute — é UMA caixa neste desenho. Instruções, skills, guardrails, memória, orquestração e ferramentas são camadas definidas por engenharia, cada uma com dono e regra. Quem não define camadas entrega o controle ao modelo; quem define troca o modelo amanhã sem refazer o sistema.",
-    src:"arquitetura-agente.png",
-    rodape:"Apêndice técnico — arquitetura de referência de um agente com modelo generativo. A governança mora nas camadas, não no modelo." }
+  { tipo:"cta" }
 ];
 const NOVE = [
-  "Quantos agentes rodam hoje com acesso a dados de produção — e quem responde por cada um?",
-  "Nossa política de IA é executada por algum sistema — ou é um PDF?",
-  "Se um agente violar uma regra de arquitetura agora, o que acontece: aviso, bloqueio ou nada?",
-  "Uma aprovação humana sobrevive à proposta do agente mudar depois dela?",
+  "Qual indicador de negócio cada agente em produção move — e qual era a linha de base antes dele?",
   "Sabemos o custo de inferência POR caso de uso — com teto e corte?",
-  "Que evidência entregamos ao auditor sobre decisões executadas por IA — em quanto tempo?",
-  "Nosso contexto (código, prompts, logs) está em nuvem própria ou na do fornecedor?",
-  "Qualidade de resposta é medida por eval automatizado ou por opinião?",
+  "O processo foi redesenhado para o agente, ou o agente foi colado no processo de ontem?",
+  "O próximo caso de uso reaproveita integrações e skills do anterior — ou recomeça do zero?",
+  "Quem decide qual modelo roda em cada tarefa — e com que critério de custo?",
+  "Quantos agentes rodam hoje com acesso a dados de produção — e quem responde por cada um?",
+  "Se o preço do token subir amanhã, o que fica caro — e trocamos de modelo sem refazer o sistema?",
+  "Uma aprovação humana sobrevive à proposta do agente mudar depois dela?",
   "Se trocarmos de fornecedor de IA amanhã, o histórico e as regras vêm conosco?"
 ];
 /* ═══════════ armazenamento: API do container ou demo local ═══════════ */
@@ -338,26 +338,26 @@ function barras(qid, mini){
 function fotografia(compacta){
   const med = ids => { const ms = ids.map(mediaScore).filter(m => m != null);
     return ms.length ? ms.reduce((a,b)=>a+b,0)/ms.length : null; };
-  const iAg = med(["p1","p2","p3","p4","p8"]);   // agentes & governança
-  const iDa = med(["p5","p6"]);                   // estrutura de dados
-  const geral = med(["p1","p2","p3","p4","p5","p6","p8"]);
+  const iAg = med(["p1","p2","p6"]);             // arquitetura: processo, integração, dados
+  const iDa = med(["p3","p4","p5","p7"]);        // economia: custo, modelo, reuso, medição
+  const geral = med(["p1","p2","p3","p4","p5","p6","p7"]);
   let html = "";
   if (geral != null)
     html += '<div class="card indice"><span class="valor">'+geral.toFixed(1)+'</span>'+
-      '<div><b>Índice de maturidade da sala</b> (escala 1–4)<br>'+
+      '<div><b>Índice de maturidade da sala para ROI de agentes</b> (escala 1–4)<br>'+
       '<span class="muted" style="font-size:12.5px">Nível típico: '+NIVEIS[Math.round(geral)]+' · leitura ilustrativa dos votos desta sessão</span>'+
       '<div class="chips" style="margin-top:8px">'+
-      (iAg != null ? '<span class="pill on">Agentes & governança: '+iAg.toFixed(1)+'</span>' : '')+
-      (iDa != null ? '<span class="pill" style="border-color:var(--teal);color:var(--teal)">Estrutura de dados: '+iDa.toFixed(1)+'</span>' : '')+
+      (iAg != null ? '<span class="pill on">Arquitetura (processo, integração, dados): '+iAg.toFixed(1)+'</span>' : '')+
+      (iDa != null ? '<span class="pill" style="border-color:var(--teal);color:var(--teal)">Economia (custo, modelo, reuso, medição): '+iDa.toFixed(1)+'</span>' : '')+
       '</div></div></div>';
   if (!compacta && geral != null){
     let li;
     if (geral < 2.0)
-      li = ["A sala está onde o mercado está", "— e é exatamente este o terreno dos 40% do Gartner. A boa notícia: o caminho não é misterioso, é disciplina conhecida (próximos dois quadros)."];
+      li = ["A sala está onde o mercado está", "— ROI que não aparece é o terreno dos 40% do Gartner. A boa notícia: a arquitetura que muda isso é conhecida (próximos dois quadros)."];
     else if (geral < 3.0)
-      li = ["Meio do caminho", "— as fundações existem; o vão está em transformar intenção em regra que executa. É o degrau que separa os 74% que planejam dos 21% que provam (Deloitte)."];
+      li = ["Meio do caminho", "— as fundações existem; o vão está em transformar casos isolados em plataforma reutilizável. É aí que o custo marginal cai e o ROI aparece — o degrau entre os 74% que planejam e os 21% que provam (Deloitte)."];
     else
-      li = ["Autoavaliação acima do mercado", "— a Deloitte mediu 21% de governança madura, e 74% ACHAM que estarão prontas em 2 anos. Ou esta sala é a elite, ou fomos generosos conosco. O teste honesto são as nove perguntas do final: quem as responder com evidência no comitê é, de fato, os 21%."];
+      li = ["Autoavaliação acima do mercado", "— a Deloitte mediu 21% de governança madura, e 74% ACHAM que estarão prontas em 2 anos. Ou esta sala é a elite, ou fomos generosos conosco. O teste honesto: o segundo caso de uso de vocês custou menos que o primeiro? E as nove perguntas do final, respondidas com evidência no comitê."];
     html += '<div class="statement"><b>Leitura da sala: '+li[0]+'</b> '+li[1]+'</div>';
   }
   if (!compacta) html += minisFoto();
@@ -370,9 +370,9 @@ function minisFoto(){
   }).join("") + '</div>';
 }
 const RADAR_DIMS = [
-  { id:"p1", lb:"Inventário" }, { id:"p2", lb:"Política" }, { id:"p3", lb:"Violação" },
-  { id:"p4", lb:"Custo" }, { id:"p5", lb:"Dados: fonte" }, { id:"p6", lb:"Lineage" },
-  { id:"p8", lb:"Auditoria" }
+  { id:"p1", lb:"Processo" }, { id:"p2", lb:"Integração" }, { id:"p3", lb:"Custo" },
+  { id:"p4", lb:"Modelo por tarefa" }, { id:"p5", lb:"Reuso" }, { id:"p6", lb:"Dados" },
+  { id:"p7", lb:"Medição" }
 ];
 function desenharRadar(){
   const cv = $("#radar");
@@ -446,6 +446,7 @@ const CENA = {
     { de:"pre", para:"orq", log:"Preço · margem preservada; remarcação desnecessária" },
     { de:"orq", para:"hum", log:"Plano montado · transferir 2 lotes — enviado ao humano" },
     { de:"hum", para:"orq", log:"Humano APROVA · execução disparada, com registro completo", lima:true },
+    { de:null, para:null, log:"Custo desta decisão · 9 chamadas de modelo · 4 sistemas integrados · R$ 3,10 — lançado no caso de uso" },
     { de:null, para:null, log:"Ruptura evitada antes de acontecer — decisão rastreável de ponta a ponta", fim:true }
   ]
 };
@@ -521,14 +522,13 @@ function telaoSlide(sl){
   const T = {
     anim(){
       return '<div><p class="eyebrow">ISTO JÁ ACONTECE</p>'+
-        '<h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Agentes decidindo juntos — um problema de negócio resolvido em segundos</h1>'+
-        '<p class="muted" style="font-size:13.5px;max-width:72ch">Uma ruptura de estoque prevista. Cinco agentes negociam a resposta entre si; um humano aprova; tudo fica registrado. Acompanhem o log à direita — e reparem na última linha.</p></div>'+
+        '<h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Agentes decidindo juntos — e cada decisão tem um custo</h1>'+
+        '<p class="muted" style="font-size:13.5px;max-width:72ch">Uma ruptura de estoque prevista. Cinco agentes negociam a resposta entre si, consultando quatro sistemas; um humano aprova; tudo fica registrado — inclusive quanto custou. Acompanhem o log — e reparem nas duas últimas linhas.</p></div>'+
         '<div class="animGrid"><canvas class="cv" id="cv"></canvas><div class="logp" id="animlog"></div></div>'+
         '<p class="rodape">Simulação ilustrativa — números fictícios. O padrão (agentes especialistas + orquestração + gate humano) é o mesmo dos projetos publicados em apllos.com/cases.</p>';
     },
     imagem(){
-      const volta = 3; // cenário
-      return '<div><p class="eyebrow">APÊNDICE · A NECESSIDADE DE DEFINIR CAMADAS</p>'+
+      return '<div><p class="eyebrow">A ARQUITETURA OCULTA</p>'+
         '<h1 class="q" style="font-size:clamp(18px,2.4vw,28px)">'+esc(sl.titulo)+'</h1>'+
         (sl.sub ? '<p class="muted" style="font-size:12.5px;max-width:88ch;margin:4px 0 0">'+esc(sl.sub)+'</p>' : '')+'</div>'+
         '<div class="card" style="padding:10px;display:flex;justify-content:center">'+
@@ -539,8 +539,7 @@ function telaoSlide(sl){
         '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">'+
         '<p class="rodape" style="margin:0">'+esc(sl.rodape)+'</p>'+
         '<span style="display:flex;gap:8px">'+
-        '<button class="btn" id="marcar">Onde a Apllos atua</button>'+
-        '<button class="btn ghost" data-goto="'+volta+'">← Voltar ao cenário</button></span></div>';
+        '<button class="btn" id="marcar">Onde a Apllos atua</button></span></div>';
     },
     capa(){
       return '<div style="margin-block:auto"><p class="eyebrow">SAB CIO 2026 · SESSÃO APLLOS · 30 MIN</p>'+
@@ -573,25 +572,25 @@ function telaoSlide(sl){
       const G = [
         ["1 · O FRACASSO JÁ COMEÇOU", [
           ["40%","vão desligar ou rebaixar seus agentes até 2027","governança e custo — Gartner, 05/2026"],
-          ["82%","já têm agentes que a própria TI desconhece","shadow agents — Cloud Security Alliance, 04/2026"]]],
-        ["2 · GUARDRAIL NÃO GOVERNA A EMPRESA", [
-          ["De fábrica","guardrail virou item embutido das nuvens","3 fabricantes comprados em 12 meses — filtra o modelo, não o processo"],
-          ["0","nativos executam a política DA SUA empresa entre nuvens","cada nuvem governa só a si"]]],
-        ["3 · O CONTROLE JÁ É COBRADO — HOJE", [
-          ["2%","do faturamento: sanção LGPD se agente tocar dado sem prova","agente também é tratamento de dados — ANPD"],
-          ["21%","apenas têm governança madura para responder","Deloitte, 08/2026 — auditoria e ISO 42001 já cobram"]]]
+          ["82%","já têm agentes que a própria TI desconhece","gasto e risco fora do radar — Cloud Security Alliance, 04/2026"]]],
+        ["2 · A CONTA CRESCE ESCONDIDA", [
+          ["1 mês","para consumir o budget ANUAL de IA","relato de campo de praticante em grandes empresas brasileiras (POD.IA #11) — relato, não pesquisa"],
+          ["×10","dez casos sem camada comum = dez vezes a mesma fundação","a curva que a provocação 5 vai medir nesta sala"]]],
+        ["3 · SEM GOVERNO, O ROI NÃO SE SUSTENTA", [
+          ["21%","apenas têm governança madura para agentes","Deloitte, 08/2026 — 74% dizem que terão em 2 anos"],
+          ["2%","do faturamento: sanção LGPD se agente tocar dado sem prova","agente também é tratamento de dados — ANPD"]]]
       ];
-      return '<div><p class="eyebrow">A PROVOCAÇÃO · QUEM GOVERNA O QUE VOCÊS ACABARAM DE VER?</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">O que falta não é tecnologia — é governança</h1><p class="muted" style="font-size:13.5px;max-width:80ch">E governança aqui NÃO é escolher o modelo certo e congelar a decisão — a inovação da área não para, e definição rígida de modelo ou ferramenta nasce obsoleta. Governar as invariantes (escopo, gate humano, custo, prova) é o que permite <b style="color:var(--texto)">trocar de peça sem perder o controle</b>.</p></div>'+
+      return '<div><p class="eyebrow">A PROVOCAÇÃO · QUEM PAGA O QUE VOCÊS ACABARAM DE VER?</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">O ROI não mora no modelo — mora na arquitetura em volta dele</h1><p class="muted" style="font-size:13.5px;max-width:80ch">E essa arquitetura não se resolve escolhendo o modelo certo e congelando a decisão — a inovação da área não para. Processo, integração, custo por decisão e governo são as camadas que permitem <b style="color:var(--texto)">trocar de peça sem perder o retorno</b>.</p></div>'+
         '<div class="grid3">'+G.map(([t,cards]) => '<div><p class="grupoT">'+t+'</p><div style="display:flex;flex-direction:column;gap:10px">'+
           cards.map(([v,b,s])=>'<div class="kpi"><span class="valor">'+v+'</span><b>'+b+'</b><span>'+s+'</span></div>').join("")+'</div></div>').join("")+'</div>'+
-        '<div class="statement"><b>A soma:</b> todo mundo acelera, o guardrail de fábrica não governa a SUA operação — e a prova já é exigida por lei.</div>'+
-        '<p style="margin:4px 0 0"><button class="btn ghost" data-goto="'+SLIDES.findIndex(x=>x.tipo==="imagem")+'" style="font-size:12px;padding:8px 13px">Anatomia de um agente → (apêndice técnico)</button></p>' ;
+        '<div class="statement"><b>A soma:</b> o agente funciona — o que decide o retorno é a arquitetura em volta dele: processo, integração, custo por decisão e governo.</div>';
     },
     mecanica(){
-      const P = [["Provocação","Nove perguntas diretas — de agentes a modelo de governo"],["Voto anônimo","Pelo QR, no celular — 30 segundos"],
+      const P = [["Provocação","Nove perguntas sobre a arquitetura que decide o ROI"],["Voto anônimo","Pelo QR, no celular — 30 segundos"],
         ["Resultado na hora","A distribuição da sala aparece aqui"],["A sala fala","Quem quiser defende sua resposta"],
         ["Contraste","Sala × números de mercado"],["Síntese","A fotografia de maturidade da sala no final"]];
-      return '<div><p class="eyebrow">CONNECT SESSION · A DINÂMICA</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Bem-vindos — vocês conduzem esta sessão</h1></div>'+
+      return '<div><p class="eyebrow">CONNECT SESSION · SALA 2 · APLLOS</p><h1 class="q" style="font-size:clamp(22px,3.2vw,38px)">A Arquitetura Oculta do ROI</h1>'+
+        '<p class="muted" style="font-size:14px;max-width:80ch;margin:4px 0 0">Otimizando processos e integrações para escalar agentes sem inflar a conta da TI — e quem conduz esta conversa são vocês.</p></div>'+
         '<div class="passos">'+P.map(([t,d])=>'<div class="passo-c"><b>'+t+'</b><span>'+d+'</span></div>').join("")+'</div>'+
         '<div class="statement"><b>Regra da casa:</b> não existe resposta errada — existe fotografia honesta. O voto é anônimo justamente para isso.</div>'+
         '<p class="muted" style="font-size:13px">Aponte a câmera para o QR ao lado já — a primeira votação é só um aquecimento, daqui a pouco.</p>';
@@ -641,45 +640,45 @@ function telaoSlide(sl){
     },
     dmbok(){
       const A = [
-        ["Governança de Dados","política com dono, papel e regra que executa — o centro da roda","P2 · P3"],
-        ["Qualidade de Dados","eval e limiar de release: resposta piorou, release não sai","P7-C"],
-        ["Metadados & Lineage","rastrear a resposta do agente até a fonte, em minutos","P6"],
-        ["Arquitetura de Dados","plataforma governada como fundação — não planilha intermediária","P5"],
-        ["Segurança de Dados","escopo mínimo por agente; dado pessoal com prova (LGPD)","P1 · P8"],
-        ["Integração & Interop.","agente consome contrato de dado — nunca o atalho","P5 · P6"]
+        ["Governança de Dados","política com dono, papel e regra que executa — o centro da roda","P9"],
+        ["Integração & Interop.","contratos e conectores reutilizáveis — o 2º caso usa o que o 1º construiu","P2 · P5"],
+        ["Arquitetura de Dados","plataforma governada como fundação — não planilha intermediária","P6"],
+        ["Qualidade de Dados","eval e limiar de release: resposta piorou, release não sai","P8-D"],
+        ["Metadados & Lineage","rastrear a resposta do agente até a fonte — erro achado cedo é erro barato","P6"],
+        ["Segurança de Dados","escopo mínimo por agente; dado pessoal com prova (LGPD)","P8-A"]
       ];
       return '<div><p class="eyebrow">O FECHAMENTO</p>'+
-        '<h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Nada do que votamos hoje é novidade — chama-se governança de dados</h1>'+
+        '<h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">A arquitetura oculta tem um nome antigo: gestão de dados</h1>'+
         '<p class="muted" style="font-size:13.5px;max-width:76ch">O DAMA-DMBOK organiza essa disciplina há duas décadas — e sobreviveu a warehouse, big data, lake e mesh porque governa <b style="color:var(--texto)">disciplinas, não ferramentas</b>. A ferramenta de IA muda a cada seis meses; as invariantes (escopo, gate humano, custo, evidência) não mudam. Agentes não pedem um governo novo: pedem estender o que o DMBOK já ensina a decisões que acontecem em segundos, por software.</p></div>'+
         '<div class="grid3">'+A.map(([a,d,p]) =>
           '<div class="coluna" style="padding:14px"><h3 style="font-size:14px">'+a+'</h3>'+
           '<p style="font-size:12.8px;margin:6px 0 8px">'+d+'</p>'+
           '<span class="pill" style="font-size:10.5px">na sessão de hoje: '+p+'</span></div>').join("")+'</div>'+
-        '<div class="statement">Quem já tem o DMBOK na casa está mais perto do que imagina — <b>falta projetá-lo sobre os agentes</b>. É disso que trata o próximo quadro.</div>'+
+        '<div class="statement">Quem já tem o DMBOK na casa está mais perto do que imagina — <b>boa parte da fundação que derruba o custo marginal dos agentes já existe</b>. Falta projetá-la sobre eles: é o próximo quadro.</div>'+
         '<p class="rodape">DAMA-DMBOK® é marca da DAMA International — usada aqui como referência de mercado, sem endosso.</p>';
     },
     iafirst(){
       const ENG = [
-        ["Metodologia vira contexto","DDD e SDD deixam de ser slide: viram instruções e specs que o agente segue"],
+        ["Integração reutilizável","APIs e conectores governados: o 2º caso usa o que o 1º construiu"],
         ["Harness corporativo","UM orquestrador definido pela empresa — não cada squad com o seu"],
-        ["Guardrails corporativos","aplicados pelo harness, valendo para qualquer modelo"],
-        ["Skills reutilizáveis","o que um time aprende vira skill versionada dos outros"],
-        ["Evals como gate","qualidade por avaliação automatizada — limiar de release, não opinião"]];
+        ["Roteamento de modelos","modelo menor onde basta, maior onde paga — com custo medido por decisão"],
+        ["Skills reutilizáveis","método (DDD, SDD) e aprendizado viram skills versionadas dos outros times"],
+        ["Guardrails e evals","aplicados pelo harness, valendo para qualquer modelo — limiar de release, não opinião"]];
       const ORG = [
         ["Necessidades corporativas primeiro","o caso de uso nasce da dor do negócio mapeada — nunca da ferramenta disponível"],
         ["Processos redesenhados","rituais, medição e esteira mudam junto: a régua de ontem não mede o trabalho de hoje"],
+        ["ROI acordado antes","indicador de negócio e linha de base definidos antes do piloto — assinados pelo negócio"],
         ["Adoção além da engenharia","produto, operação e negócio no mesmo ciclo — só dev adotando não vira resultado"],
-        ["Treinamento e cultura","conversa aberta sobre papéis e medo; champions por área"],
         ["Gates por evidência","sandbox governado → produção; escala só com prova, não com roadmap fixo"]];
       const linha = (rot, its) => '<div><p class="grupoT" style="margin:2px 0 8px">'+rot+'</p>'+
         '<div class="passos" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">'+
         its.map(([a,b])=>'<div class="passo-c"><b>'+a+'</b><span>'+b+'</span></div>').join("")+'</div></div>';
       return '<div><p class="eyebrow">SÍNTESE · CHEGAR A IA-FIRST É UM PROGRAMA, NÃO UMA COMPRA</p>'+
         '<h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">O que a sala disse — e o que os 21% fazem diferente</h1>'+
-        '<p class="muted" style="font-size:12.5px;max-width:80ch">Duas trilhas que andam juntas: a engenharia que governa os agentes e a organização que os absorve. Quem toca só uma delas fica no piloto eterno.</p></div>'+
+        '<p class="muted" style="font-size:12.5px;max-width:80ch">Duas trilhas que andam juntas: a engenharia que faz o próximo caso custar menos e a organização que transforma o agente em resultado. Quem toca só uma delas fica no piloto eterno — e paga duas vezes pela mesma fundação.</p></div>'+
         linha("TRILHA DE ENGENHARIA", ENG)+
         linha("TRILHA DA ORGANIZAÇÃO", ORG)+
-        '<div class="statement">E sim — <b>temos um case de governança aplicando essa lente</b>; quem quiser ver como foi, nos encontre no intervalo.</div>';
+        '<div class="statement">E sim — <b>temos um case aplicando essa lente</b>; quem quiser ver como foi, nos encontre no intervalo.</div>';
     },
     custo(){
       return '<div style="margin-block:auto;display:flex;flex-direction:column;gap:16px;max-width:88ch">'+
@@ -687,7 +686,7 @@ function telaoSlide(sl){
         '<h2 class="q" style="font-size:clamp(19px,2.4vw,28px);color:var(--muted)">Quanto custa um código errado em produção?</h2>'+
         '<h2 class="q" style="font-size:clamp(23px,3.1vw,36px)">Quanto custa uma regra errada — executada mil vezes por dia?</h2>'+
         '<h2 class="q" style="font-size:clamp(27px,3.8vw,44px);color:var(--roxo)">E uma vulnerabilidade que um agente abriu — e ninguém viu?</h2>'+
-        '<div class="statement" style="margin-top:8px">A IA deu a todos a POC em horas e o desenvolvimento em dias. <b>O que ela não barateou foi o erro.</b> Governança é o que permite usar essa velocidade — e resolver problemas <b>sem dano</b>.</div></div>';
+        '<div class="statement" style="margin-top:8px">A IA deu a todos a POC em horas e o desenvolvimento em dias. <b>O que ela não barateou foi o erro</b> — nem a conta de uma arquitetura mal desenhada. Arquitetura e governo são o que permitem escalar essa velocidade <b>sem dano e sem inflar a conta</b>.</div></div>';
     },
     nove(){
       return '<div><p class="eyebrow">PARA LEVAR PARA O COMITÊ</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Nove perguntas que testam qualquer programa — o nosso incluído</h1></div>'+
@@ -695,9 +694,9 @@ function telaoSlide(sl){
         '<div class="statement"><b>O teste honesto:</b> quem não aguentar respondê-las não deveria estar no seu shortlist. As perguntas estão agora no celular de vocês.</div>';
     },
     cta(){
-      const P = [["A régua na sua empresa",["Assessment das 8 dimensões","Inventário de agentes + gaps priorizados","Entregável: régua + roadmap executivo"]],
-        ["O trilho no seu contexto",["Sessão de desenho com arquitetura e segurança","O ciclo do card no SEU processo e nuvem","Entregável: blueprint de aderência"]],
-        ["Um caso de uso na esteira",["Piloto governado de ponta a ponta","Caso real, custo medido, evidência desde o dia 1","Entregável: caso em produção + trilho reutilizável"]]];
+      const P = [["Diagnóstico da arquitetura oculta",["Processos, integrações e custo por caso de uso","Onde o ROI vaza hoje — priorizado","Entregável: régua + roadmap executivo"]],
+        ["A camada reutilizável no seu contexto",["Integrações, harness e roteamento de modelos","Desenhados no SEU ambiente e na SUA nuvem","Entregável: blueprint de aderência"]],
+        ["Um caso de uso na esteira",["Piloto governado de ponta a ponta","Linha de base e custo por decisão desde o dia 1","Entregável: caso em produção + trilho reutilizável"]]];
       return '<div><p class="eyebrow">TRÊS CONVERSAS PARA OS INTERVALOS</p><h1 class="q" style="font-size:clamp(20px,2.8vw,32px)">Uma das nove perguntas sem resposta? Nos encontre no intervalo.</h1></div>'+
         '<div class="grid3">'+P.map(([t,b])=>'<div class="coluna"><h3 style="font-size:15px">'+t+'</h3><ul>'+b.map(x=>'<li>'+x+'</li>').join("")+'</ul></div>').join("")+'</div>'+
         '<div class="statement"><b>www.apllos.com</b> · o material da sessão — as nove perguntas e os números com fonte — está agora no celular de quem escaneou o QR. Um print e é seu.</div>';
@@ -791,7 +790,7 @@ function vistaTelao(){
     '<span class="url">'+esc(urlVoto)+'</span><span class="muted" style="font-size:11px">1 voto por pessoa · anônimo</span></div>' : "";
   app.innerHTML = '<div class="telaoWrap">'+
     '<div class="headline"><span class="logo" style="font-size:18px">Apllos<b>.</b></span>'+
-    '<span class="pill">SAB CIO 2026 · governança de IA agêntica</span></div>'+
+    '<span class="pill">SAB CIO 2026 · a arquitetura oculta do ROI</span></div>'+
     (DEMO ? '<div class="aviso"><b>MODO DEMO</b> — backend fora do ar: votos simulados neste navegador. Outra aba sem #telao = participante.</div>' : "")+
     (mostraQR ? '<div class="grade">'+palco+'<div>'+lateral+'</div></div>' : palco)+
     '<div class="controles">'+
